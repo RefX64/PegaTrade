@@ -1,0 +1,51 @@
+﻿@model PegaTrade.ViewModel.FullDashboardVM
+@{ }
+
+<div class="col-xs-12 col-sm-8">
+    <div class="row">
+        <div class="default-block" style="min-height: 45px;">
+            <ul id="mainDashboardConvTabs" class="nav nav-tabs tabs-navyBlue" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#mainDashboardMainConvTab" data-toggle="tab" data-height="true" aria-controls="portfolioCurrentHoldingCoins" role="tab">Dashboard</a>
+                </li>
+                <li role="presentation">
+                    <a href="#mainDashboardAllConvTab" data-toggle="tab" data-height="true" aria-controls="portfolioCurrentSoldCoins" role="tab" onclick="app.ViewAllThreadsInMainDashboard()">All</a>
+                </li>
+                <li role="presentation">
+                    <a href="#mainDashboardTwitterTab" data-toggle="tab" data-height="true" aria-controls="portfolioCurrentSoldCoins" role="tab">Twitter</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12 col-sm-8">
+    <div class="row">
+        <div class="tab-content">
+            <div id="mainDashboardMainConvTab" class="content tab-pane active">
+                <div id="conversationsHolder">
+                    @Html.Partial("~/Views/Community/_Conversations.cshtml", Model.ConversationsVM)
+                </div>
+            </div>
+            <div id="mainDashboardAllConvTab" class="content tab-pane">
+                <p>Loading... Please wait...</p>
+            </div>
+            <div id="mainDashboardTwitterTab" class="content tab-pane">
+                <div class="default-block marginBottom20">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <p>More social media addons coming soon.</p>
+                                <p>In the meantime, please follow us on Twitter: <a href="https://twitter.com/PegaTrade" target="_blank">@@PegaTrade</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () { app.Crypto_FullDashboardLoaded(); })();
+</script>

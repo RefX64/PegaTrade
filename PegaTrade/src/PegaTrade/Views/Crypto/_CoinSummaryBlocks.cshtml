@@ -1,0 +1,45 @@
+﻿@using PegaTrade.Layer.Models;
+@model PegaTrade.ViewModel.Coins.CoinsVM
+@{ }
+
+<div id="holdingSummaryBlocks" class="row">
+    <div class="col-xs-6 col-sm-4">
+        <div class="default-block">
+            <div class="header"><h5>Initial Investment</h5></div>
+            <div class="content"><h2>@Model.DisplayCurrency.Symbol()@Model.GetTotalPriceOf(Types.PriceValue.InitialBoughtValue).ToWholeNumberByCurrency(Model.DisplayCurrency)</h2></div>
+        </div>
+    </div>
+    <div class="col-xs-6 col-sm-4 hidden-xs">
+        <div class="default-block">
+            <div class="header"><h5>Current Market Value</h5></div>
+            <div class="content"><h2 class="@Model.CurrentHoldingProfitCSS">@Model.DisplayCurrency.Symbol()@Model.GetTotalPriceOf(Types.PriceValue.CurrentValue).ToWholeNumberByCurrency(Model.DisplayCurrency)</h2></div>
+        </div>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+        <div class="default-block">
+            <div class="header"><h5>Current Total Profit</h5></div>
+            <div class="content"><h2 class="@Model.CurrentHoldingProfitCSS">@Model.DisplayCurrency.Symbol()@Model.GetTotalPriceOf(Types.PriceValue.CurrentProfitLoss).ToWholeNumberByCurrency(Model.DisplayCurrency)</h2></div>
+        </div>
+    </div>
+</div>
+
+<div id="soldSummaryBlocks" class="row" style="display: none">
+    <div class="col-xs-6 col-sm-4">
+        <div class="default-block">
+            <div class="header"><h5>Initial Investment</h5></div>
+            <div class="content"><h2>@Model.DisplayCurrency.Symbol()@Model.GetTotalPriceOf(Types.PriceValue.InitialSoldValue).ToWholeNumberByCurrency(Model.DisplayCurrency)</h2></div>
+        </div>
+    </div>
+    <div class="col-xs-6 col-sm-4 hidden-xs">
+        <div class="default-block">
+            <div class="header"><h5>Sold Investment</h5></div>
+            <div class="content"><h2 class="@Model.SoldProfitCSS">@Model.DisplayCurrency.Symbol()@Model.GetTotalPriceOf(Types.PriceValue.SoldEndValue).ToWholeNumberByCurrency(Model.DisplayCurrency)</h2></div>
+        </div>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+        <div class="default-block">
+            <div class="header"><h5>Realized Profit</h5></div>
+            <div class="content"><h2 class="@Model.SoldProfitCSS">@Model.DisplayCurrency.Symbol()@Model.GetTotalPriceOf(Types.PriceValue.SoldProfitLoss).ToWholeNumberByCurrency(Model.DisplayCurrency)</h2></div>
+        </div>
+    </div>
+</div>

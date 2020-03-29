@@ -1,0 +1,80 @@
+﻿@model PegaTrade.Layer.Models.Account.PegaUser
+@{ }
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <div class="default-block marginBottom20">
+            <div class="col-xs-3 col-lg-2" style="padding-top: 10px">
+                <img src="@Model.GravatarImageLink()" alt="Avatar" class="img-circle" style="margin-bottom: 4px;" />
+                <p class="text-center">
+                    <a href="javascript:void(0)" onclick="pega.ToggleClickPopover(this.id, 'gravatarInfoTipsTemplate')" id="changePopoverTipLink" class="small" data-toggle="popover" data-title="Change Avatar using Gravatar"
+                       data-placement="bottom" data-dismissible="true" data-content="Please use Gravatar to change your Avatar. It's very simple and it goes by your email address (@Model.Email). <a href='https://en.gravatar.com/' target='_blank'>Gravatar - Upload Avatar</a>">
+                        Change
+                    </a>
+                </p>
+            </div>
+            <div class="col-xs-9 col-lg-10">
+                <div class="header">User Account</div>
+                <div class="content">
+                    <label asp-for="Username">Username:</label> @Model.Username <br />
+                    <label asp-for="Email">Email Address:</label> @Model.Email
+                </div>
+            </div>
+        </div>
+
+        <div class="default-block">
+            <div class="col-xs-12">
+                <div class="header">User Information</div>
+                <div class="content">
+                    <label asp-for="FullName">Full Name:</label> @Model.FullName <br />
+                    <label asp-for="Username">Username:</label> @Model.Username <br />
+                    <label asp-for="Email">Email Address:</label> @Model.Email
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6">
+        <div class="default-block">
+            <div class="header">Password Change Form</div>
+            <div class="content">
+                <form id="changePasswordForm" asp-action="CurrentUserChangePassword" asp-controller="Account" asp-antiforgery="true">
+                    <input type="hidden" asp-for="Username" />
+                    <div class="form-group">
+                        <label asp-for="NewChangedPassword">New Password</label>
+                        <input type="password" asp-for="NewChangedPassword" class="form-control" /><br />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ConfirmNewChangedPassword">Confirm New Password</label>
+                        <input type="password" asp-for="ConfirmNewChangedPassword" class="form-control" /><br />
+                    </div>
+                    <button type="button" class="btn btn-dark" onclick="app.SubmitChangePasswordForm()">Change Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="marginTop20">
+    <button class="btn btn-danger" onclick="ResetAllTrades()">Reset All Trades</button>
+</div>
+
+<script>
+    function SubmitChangePasswordForm()
+    {
+        pega.ShowSiteWideOverlay();
+        rj.AsyncSubmitForm('changePasswordForm', { isJson: true }).then(function (result) 
+        {
+            if (pega.DisplayResultsItem(result)) { pega.Settings.mainModalObject.hide(); rj.Empty('#changePasswordForm'); }
+        }).catch(pega.OnFetchError).finally(pega.HideSiteWideOverlay);
+    }
+
+    function ResetAllTrades()
+    {
+        alertify.confirm("This will delete all user trades. You will need to add or import them all over again. Are you sure that you want to do this?", function()
+        {
+            pega.ShowSiteWideOverlay();
+            rj.AsyncPost('@Url.Action("ResetAllTradesData", "Crypto")', null, { isJson: true }).then(pega.DisplayResultsItem).catch(pega.OnFetchError).finally(pega.HideSiteWideOverlay);
+        });
+    }
+</script>

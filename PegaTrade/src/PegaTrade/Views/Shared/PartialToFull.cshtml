@@ -1,0 +1,6 @@
+﻿@model PegaTrade.ViewModel.PartialToFullVM
+@{
+    ViewData["Title"] = "PegaTrade - " + Model.Title;
+}
+
+@Html.Partial(Model.PartialViewName, Model.ViewModel)

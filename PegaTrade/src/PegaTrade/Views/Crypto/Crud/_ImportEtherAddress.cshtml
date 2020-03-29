@@ -1,0 +1,23 @@
+﻿@model PegaTrade.Layer.Models.Coins.ExchangeApiInfo
+@{ }
+<p>You can enter your public ethereum address below and we'll automatically import current ethereum balance and all the ER20 token this address is holding.</p>
+<p class="text-danger small">Please note that this will delete ALL previously imported ehtereum address data from the current portfolio before re-importing it.</p>
+<p class="text-info small">This API service is provided by Ethplorer. Please do not make multiple requests.</p>
+<p class="small">Coming soon: *Update Mode (instead of overwrite), *Ignore small balance coins</p>
+
+<form id="importFromEtherAddressForm" method="post" class="marginTop20" asp-action="ImportEtherAddress" asp-controller="Crypto" asp-antiforgery="true">
+    <input type="hidden" asp-for="PortfolioID" id="etherAddressFormPortfolioId" />
+    <div class="form-group marginTop20">
+        <label asp-for="ApiPublic">Public Ethereum Address</label>
+        <input asp-for="ApiPublic" class="form-control" placeholder="0x..." />
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <button type="button" class="btn btn-indigo" onclick="app.SubmitImportEtherAddressForm()">Import Tokens</button>
+                <button class="btn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,23 @@
+﻿@model PegaTrade.Layer.Models.Account.PegaUser
+@{
+    ViewData["Title"] = "ViewUser";
+    Layout = "_Layout";
+    ViewData["GrayBackground"] = true;
+}
+
+
+<div class="container">
+    <h4>@Model.Username's Profile</h4>
+    <div class="row">
+        <div id="userSummaryContainer">
+            <div class="loadingDivDisplay"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+@section deferredscripts
+{
+    rj.AsyncLoad("userSummaryContainer", '@Url.Action("GetViewUser", "Account")', { username: '@Model.Username' });
+}
+</script>

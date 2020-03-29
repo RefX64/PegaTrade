@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="loadingDivDisplay"></div>
+    </div>
+</div>
+
+<script>
+@section deferredscripts
+{
+    rj.AsyncLoad('partialBody', '@Url.Action("FullDashboard", "Crypto")');
+    @if (TempData["UserCreatedTransferMessage"] != null)
+    {
+        @: alertify.success('@TempData["UserCreatedTransferMessage"].ToString()');
+    }
+}
+</script>

@@ -1,0 +1,265 @@
+﻿@using PegaTrade.Layer.Models
+@using PegaTrade.Layer.Models.Account;
+@{
+    bool getUserSuccess = Context.Session.TryGetValue(Constant.Session.SessionCurrentUser, out byte[] value);
+    PegaUser currentUser = getUserSuccess ? Utilities.Deserialize<PegaUser>(System.Text.Encoding.UTF8.GetString(value)) : null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PegaTrade</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/lib/img/favicon.png" />
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/alertify/dist/css/alertify.css" />
+        <link rel="stylesheet" href="~/lib/css/pegastyle.css" />
+        <link rel="stylesheet" href="~/lib/css/pegatrade_style.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/lib/css/pt_style_bundle.min.css" asp-append-version="true" />
+    </environment>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="wrapper">
+        <nav id="adminNavStaticSideBar" class="navbar-default navbar-static-side" role="navigation">
+            <div class="">
+                <ul class="nav nav-side" id="pega-side-menu">
+                    <li class="nav-header hidden-xs">
+                        <!-- Header -->
+                        <h2 style="color: #e8e8e8">PegaTrade</h2>
+                        <h6 class="" style="color: #808080;">By: Pegasun</h6>
+                    </li>
+                    <li class="nav-header-xs visible-xs">
+                        <h2>P</h2>
+                    </li>
+
+                    <li>
+                        <!-- Dashboard Menu -->
+                        <a class="active hidden-xs header-menu" data-toggle="collapse" data-target="#firstMenu" aria-expanded="true" aria-controls="navbar">
+                            <i class="icon ion-home"></i> &nbsp;<span class="hidden-xs">Home</span> <span class="fa arrow"></span>
+                        </a>
+                        <a class="active visible-xs" href="javascript:void(0)" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon ion-home"></i>
+                        </a>
+                        <ul class="side-menu-ul dropdown-menu in" id="firstMenu">
+                            <li>
+                                <a data-loadpartial class="" data-targetid="partialBody" data-url='@Url.Action("FullDashboard", "Crypto")' href="javascript:void(0)">
+                                    <span class='subitem-icon hidden-xs ion-chevron-right'></span>Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a data-loadpartial class="" data-targetid="partialBody" data-url='@Url.Action("Portfolio", "Crypto")' href="javascript:void(0)">
+                                    <span class='subitem-icon hidden-xs ion-chevron-right'></span>Portfolio
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <!-- Second Menu -->
+                        <a class="hidden-xs header-menu collapsed" data-toggle="collapse" data-target="#secondMenu" aria-expanded="false" aria-controls="navbar">
+                            <i class="icon ion-ios-calculator"></i> &nbsp;<span class="hidden-xs">Research</span>
+                        </a>
+                        <a class="visible-xs" href="javascript:void(0)" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon ion-ios-calculator"></i>
+                        </a>
+                        <ul class="side-menu-ul dropdown-menu" id="secondMenu">
+                            <li>
+                                <a href="/coins" target="_blank"><span class='subitem-icon hidden-xs ion-chevron-right'></span>Top 100 Coins</a>
+                            </li>
+                            <li>
+                                <a href="/viewportfolio/pegatrade/longterm" target="_blank"><span class='subitem-icon hidden-xs ion-chevron-right'></span>Our Holdings</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <!-- Third Menu -->
+                        <a class="hidden-xs header-menu collapsed" data-toggle="collapse" data-target="#thirdMenu" aria-expanded="false" aria-controls="navbar">
+                            <i class="icon ion-ios-chatboxes"></i> &nbsp;<span class="hidden-xs">Social</span>
+                        </a>
+                        <a class="visible-xs" href="javascript:void(0)" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon ion-ios-chatboxes"></i>
+                        </a>
+                        <ul class="side-menu-ul dropdown-menu" id="thirdMenu">
+                            <li>
+                                <a data-loadpartial class="" data-targetid="partialBody" data-url='@Url.Action("ConnectWithUs", "Community")' href="javascript:void(0)">
+                                    <span class='subitem-icon hidden-xs ion-chevron-right'></span> Connect With Us
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <!-- Fourth Menu -->
+                        <a class="hidden-xs header-menu collapsed" data-toggle="collapse" data-target="#fourthMenu" aria-expanded="false" aria-controls="navbar">
+                            <i class="icon ion-help-buoy"></i> &nbsp;<span class="hidden-xs">Support/Company</span>
+                        </a>
+                        <a class="visible-xs" href="javascript:void(0)" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon ion-help-buoy"></i>
+                        </a>
+                        <ul class="side-menu-ul dropdown-menu" id="fourthMenu">
+                            <li>
+                                <a data-loadpartial class="" data-targetid="partialBody" data-url='@Url.Action("ContactUsPV", "Company")' href="javascript:void(0)">
+                                    <span class='subitem-icon hidden-xs ion-chevron-right'></span> Contact Us
+                                </a>
+                            </li>
+                            <li>
+                                <a data-loadpartial class="" data-targetid="partialBody" data-url='@Url.Action("CompanyPV", "Company")' href="javascript:void(0)">
+                                    <span class='subitem-icon hidden-xs ion-chevron-right'></span> About Us
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a class="small" style="font-size: 12px; color: #99ccc8" onclick="app.PegaTradeBetaWarning()">Beta Version</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div id="page-wrapper">
+            @* Top Menu *@
+            <div class="row">
+                <nav id="adminNavTopBar" class="navbar marginBottom20">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#adminNavTopBarChild">
+                        <span class="ion-navicon" style="font-size: 28px"></span>
+                    </button>
+                    <div id="adminNavTopBarChild" class="navbar-collapse collapse navbar-user-top-custom" style="margin-top: 2px;">
+
+                        <ul class="nav navbar-nav hidden-xs">
+                            <li id="topNavAdminMenuHideBar">
+                                <a href="javascript:void(0)" onclick="app.HideAdminSideBar(true)" class="noPaddingLeft" style="font-size: 19px;" role="button" aria-expanded="false"><span class="ion-navicon-round"></span></a>
+                            </li>
+                            @* Top Menu DropDown (When side-menu is hidden) - Matches item here from Side-Menu *@
+                            <li id="topNavAdminMenuBar" class="dropdown" style="display: none">
+                                <a href="javascript:void(0)" class="dropdown-toggle noPaddingLeft" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="ion-ios-keypad"></span> &nbsp;Menu <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="javascript:void(0)" onclick="app.HideAdminSideBar(false)"><span class="ion-arrow-left-c"></span> &nbsp;Show Sidebar</a>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="ion-home"></span> &nbsp;Home</a>
+                                        <ul class="dropdown-menu" id="firstMenuTopHiddenUL"></ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="ion-calculator"></span> &nbsp;Research</a>
+                                        <ul class="dropdown-menu" id="secondMenuTopHiddenUL"></ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="ion-chatboxes"></span> &nbsp;Social</a>
+                                        <ul class="dropdown-menu" id="thirdMenuTopHiddenUL"></ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="ion-help-buoy"></span> &nbsp;Support/Company</a>
+                                        <ul class="dropdown-menu" id="fourthMenuTopHiddenUL"></ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="/viewuser/@currentUser?.Username" target="_blank">@currentUser?.Username</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="ion-person"></span> &nbsp;User <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="javascript:void(0)" data-loadpartial data-targetid="partialBody"
+                                           data-url='@Url.Action("UserAccountManagement", "Account")'>Settings</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href='@Url.Action("Logout", "Account")' class="" role="button" aria-expanded="false"><span class="ion-power"></span> &nbsp;Logout</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </nav>
+            </div>
+
+            <div id="partialBody">
+                @RenderBody()
+            </div>
+
+            <div class="row">
+                <footer class="footer user-footer-sticky-bottom">
+                    <hr style="border-top: 1px solid #d8d8d8;" />
+                    <div class="content">
+                        <div class="col-xs-4">
+                            <p>&copy; 2017 - PegaTrade</p>
+                            <p>By: <a href="https://Pegasun.com" target="_blank">Pegasun</a></p>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        
+        <div id="mainModal" class="modal fade" data-toggle="modal" tabindex="-1" role="dialog" aria-labelledby="mainModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="modal-title"></div>
+                    </div>
+                    <div class="modal-body"></div>
+                    <div class="modal-footer"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="secondModal" class="modal fade" data-toggle="modal" tabindex="-1" role="dialog" aria-labelledby="secondModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="modal-title"></div>
+                    </div>
+                    <div class="modal-body"></div>
+                    <div class="modal-footer"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="siteWideOverlay" style="display: none;"></div>
+    </div>
+
+    <script>
+        function executeLayoutInitialization()
+        {
+            rj.AddEventListener('hidden.bs.modal', '#secondModal', function (e) { pega.EmptyModal('mainModal'); });
+
+            var mq = window.matchMedia("(min-width: 768px)");
+            mq.addListener(app.WindowsWidthChangeEvent);
+            app.WindowsWidthChangeEvent(mq);
+
+            app.PopulateTopBarHiddenMenu();
+
+            // One-Page app, disable back button
+            window.onpopstate = function (e) { window.history.forward(1); }
+
+            @RenderSection("deferredscripts", false)
+        }
+    </script>
+
+    @Html.Partial("_LoadScripts")
+    @RenderSection("scripts", false)
+</body>
+</html>

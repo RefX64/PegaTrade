@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ArrayOfArrayOfString>
+    <ArrayOfString>
+      <string>E:\Developed\Website\PegaTrade\src\PegaTrade\Views\Shared\_Layout.cshtml</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>E:\Developed\Website\PegaTrade\src\PegaTrade\Views\Home\Index.cshtml</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>E:\Developed\Website\PegaTrade\src\PegaTrade\wwwroot\lib\js\pega_script.js</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>E:\Developed\Website\PegaTrade\src\PegaTrade\Views\Shared\_LoadScripts.cshtml</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>E:\Developed\Website\PegaTrade\src\PegaTrade\wwwroot\lib\js\ref.js</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>E:\Developed\Website\PegaTrade\src\PegaTrade\Startup.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>E:\Developed\Website\PegaTrade\src\PegaTrade\appsettings.Production.json</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>E:\Developed\Website\PegaTrade\src\PegaTrade\Controllers\AccountController.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>PegaTrade</string>
+    </ArrayOfString>
+  </ArrayOfArrayOfString>
+</ArrayOfArrayOfArrayOfString>

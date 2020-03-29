@@ -1,0 +1,19 @@
+﻿@* Displays a specific Thread with Comments on a Modal *@
+@model PegaTrade.ViewModel.Community.ConversationsVM
+@{ }
+
+<div class="marginBottom20">
+    @Html.EditorFor(m => m.CurrentThread)
+</div>
+
+@if (!Model.CurrentThread.IsClosed)
+{
+    <div class="marginBottom20" style="background-color: #eee; margin-left: -17px; margin-right: -17px;">
+        <div style="margin-left: 15px; margin-right: 15px; padding: 15px;">
+            @Html.Partial("Crud/_CreateThreadOrComment", Model)
+        </div>
+    </div>
+}
+
+@Html.EditorFor(m => m.CurrentThread.ThreadComments)
+

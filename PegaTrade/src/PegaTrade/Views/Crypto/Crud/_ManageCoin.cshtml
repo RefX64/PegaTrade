@@ -1,0 +1,102 @@
+﻿@model PegaTrade.ViewModel.Coins.CoinManagementVM
+@{
+
+}
+
+@if (Model.IsCreateMode)
+{
+    <div class="form-inline">
+        <a href="javascript:void(0)" class="btn btn-pega-wide-xs btn-bluegreen" onclick="app.GetWatchOnlyDetailsBasedOnSymbol(rj.Id('coinSymbolAddFormInput').value)">Watch Only Mode</a>
+        <a href="javascript:void(0)" class="small" onclick="alertify.alert(rj.Id('WatchOnlyWhatsThisMessageHolder').innerHTML.trim());">What's This?</a>
+        <span id="WatchOnlyWhatsThisMessageHolder" style="display: none">
+            This feature helps you track the performance of a coin from its current price by buying <b>$100</b> worth.<br /><br />
+            Let's say you want to track <i>USD-ETH</i>. If <i>USD-ETH</i> is currently $500, we'll buy <b>$100</b> worth (.2 eth). From there, you can track the performance. <br /><br />
+            For example, if <i>USD-ETH</i> is now $800, your initial <b>$100</b> would now be worth <b>$160</b>, and you would know <i>USD-ETH</i> has gone up <b>60%</b> since the day you started watching it.
+        </span>
+    </div>
+}
+
+<form id="coinManagementForm" asp-action="ExecuteCoinChanges" asp-controller="Crypto" asp-antiforgery="true">
+    @Html.ValidationSummary()
+    <input type="hidden" asp-for="SelectedPortfolioID" />
+    <input type="hidden" asp-for="IsCreateMode" />
+    <div class="form-group">
+        <label asp-for="Coin.Symbol">Symbol</label> <small class="color-gray-devil">Allowed: BTC-, USD-, ETH-</small>
+        @if (Model.IsCreateMode) { <input asp-for="Coin.Symbol" class="form-control " placeholder="Symbol (e.g. BTC-XRP)" id="coinSymbolAddFormInput" /> }
+        else
+        {
+            <br />
+            <strong>@Model.Coin.Symbol</strong>
+            <input type="hidden" asp-for="Coin.Symbol" />
+        }
+    </div>
+    <div class="form-group">
+        <label asp-for="Coin.Shares">Quantity</label>
+        <input asp-for="Coin.Shares" type="text" class="form-control" placeholder="Total Quantity (e.g. 1000)" onchange="rj.InputFilterDecimal(this)" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Coin.OrderDate">Order Date</label>
+        <input asp-for="Coin.OrderDate" type="date" asp-format="{0:yyyy-MM-dd}" id="coinManagementOrderDate" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Coin.PricePerUnit">Price Per Unit</label> <a href="javascript:void(0)" class="small" onclick="app.GetLatestPriceOfCoinBasedOnSymbol(rj.Id('coinSymbolAddFormInput').value, 'coinPricePerUnitAddFormInput')">Get Latest Price</a>
+        <input asp-for="Coin.PricePerUnit" type="text" class="form-control" placeholder="(Optional) Price per unit (e.g. .00005)" id="coinPricePerUnitAddFormInput" onchange="rj.InputFilterDecimal(this)" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Coin.TotalPricePaidUSD">Total Price Paid USD</label> <small class="color-gray-devil">Will be auto-generated based on <b>order date</b> if left empty.</small>
+        <input asp-for="Coin.TotalPricePaidUSD" class="form-control" placeholder="(Optional) Total Price Paid (e.g. 225)" onchange="rj.InputFilterDecimal(this)" />
+    </div>
+
+    <button type="button" class="btn btn-indigo" onclick="app.SubmitCoinManagementForm()">Submit</button>
+    @if (!Model.IsCreateMode)
+    {
+        <button type="button" class="btn btn-primary" onclick="ShowCoinManagementSoldForm()">Mark as Sold</button>
+        <button type="button" class="btn btn-danger" onclick="CoinManagementDeleteCoin()">Delete Coin</button>
+        <input type="hidden" asp-for="Coin.CoinId" />
+    }
+    <button class="btn" data-dismiss="modal">Close</button>
+</form>
+
+@if (!Model.IsCreateMode)
+{
+    <div id="markSoldFormContainer" style="display: none">
+        <a href="javascript:void(0)" onclick="ShowCoinManagementUpdateForm()"><span class="ion-arrow-left-c"></span> Back to update form</a>
+        @Html.Partial("CRUD/_MarkSoldCoin", Model)
+    </div>
+}
+
+<script>
+    (function()
+    {
+
+    })();
+
+    function ShowCoinManagementUpdateForm()
+    {
+        rj.Show('#markSoldFormContainer', false);
+        rj.Show('#coinManagementForm', true);
+    }
+
+    function ShowCoinManagementSoldForm()
+    {
+        rj.Show('#markSoldFormContainer', true);
+        rj.Show('#coinManagementForm', false);
+    }
+
+    @if (!Model.IsCreateMode)
+    {
+        <text>
+        function CoinManagementDeleteCoin()
+        {
+            rj.AsyncGetJson(rj.UrlAction('DeleteCoin', 'Crypto'), { coinId: '@Model.Coin.CoinId', portfolioId: app.GetCurrentPortfolioId() }, { isJson: true }).then(function (result)
+            {
+                if (pega.DisplayResultsItem(result))
+                {
+                    pega.Settings.mainModalObject.hide();
+                    setTimeout(app.ReloadPortfolioHoldingsCoinSummary, 300);
+                }
+            }).catch(pega.OnFetchError);
+        }
+        </text>
+    }
+</script>

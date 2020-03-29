@@ -1,0 +1,30 @@
+[
+  {
+    "outputFileName": "wwwroot/lib/css/pt_style_bundle.css",
+    "inputFiles": [
+      "wwwroot/lib/alertify/dist/css/alertify.css",
+      "wwwroot/lib/css/pegastyle.css",
+      "wwwroot/lib/css/pegatrade_style.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/js/pt_script_bundle.min.js",
+    "inputFiles": [
+      "wwwroot/lib/alertify/dist/js/alertify.js",
+      "wwwroot/lib/js/list.js",
+      "wwwroot/lib/js/ref.js",
+      "wwwroot/lib/js/pega_script.js",
+      "wwwroot/lib/js/app.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/lib/js/pega_polyfill.min.js",
+    "inputFiles": [
+      "wwwroot/lib/js/pega_polyfill.js"
+    ]
+  }
+]

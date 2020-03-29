@@ -1,0 +1,122 @@
+﻿@model PegaTrade.ViewModel.Coins.CoinManagementVM
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="form-inline">
+            Select Action: &nbsp;
+            <input type="radio" id="importAPIcreateNewRB" name="importAPIcreateOrUseExisting" onchange="app.ImportAPIActionSelectChange()" checked="checked" />
+            <label for="importAPIcreateNewRB">Create New API request</label> &nbsp;
+            <input type="radio" id="importAPIexistingRB" name="importAPIcreateOrUseExisting" onchange="app.ImportAPIActionSelectChange()" />
+            <label for="importAPIexistingRB">Use Existing API</label>
+        </div>
+    </div>
+</div>
+
+@* Existing APIs *@
+<div class="row marginTop20" id="useExistingImportSection" style="display: none">
+    <div class="col-xs-12">
+        @if (!Model.ExistingSavedImportAPIList.Any())
+        {
+            <p class="text-danger font-strong marginBottom20">
+                It seems like you don't have any saved API. Please click on "Create New API request" to create a new API first.
+                This will let you easily import all your trades from your selected exchange.
+            </p>
+        }
+
+        <div class="row marginBottom20">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="availaleExistingImportApiList">Select an exchange to re-sync/import your trades</label>
+                    <div class="col-xs-10 noHorizontalPadding">
+                        <select id="availaleExistingImportApiList" asp-items="Model.ExistingSavedImportAPIList" class="form-control"></select>
+                    </div>
+                    <div class="col-xs-2" style="padding-top: 5px;">
+                        <a href="javascript:void(0)" onclick="app.SubmitAPIDeleteRequest()">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" onclick="app.SubmitAPIsyncRequest()">Import / Sync</button>
+                    <button class="btn" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* New APIs *@
+<div id="importFromApiFormContainer">
+    <form id="importFromApiForm" method="post" class="marginTop20" asp-action="CreateNewImportAPI" asp-controller="Crypto" asp-antiforgery="true">
+        @Html.ValidationSummary()
+        <div class="form-group">
+            <label asp-for="ExchangeApiInfo.Exchange">Select Exchange</label><br />
+            <select asp-for="ExchangeApiInfo.Exchange" asp-items="Model.ImportAPIExchangeList()" id="import-exchange-api-sl" class="form-control"></select>
+        </div>
+
+        @Html.Partial("Crud/_ImportCoinApiTutorials")
+
+        <div class="form-group marginTop20">
+            <label asp-for="ExchangeApiInfo.Name">Name (Optional)</label>
+            <input asp-for="ExchangeApiInfo.Name" class="form-control" placeholder="API Name (E.g. BitTrex - Passive Investment)" />
+        </div>
+        <div class="form-group">
+            <label asp-for="ExchangeApiInfo.ApiPublic">Public API</label>
+            <input asp-for="ExchangeApiInfo.ApiPublic" class="form-control" placeholder="Public API" />
+        </div>
+        <div class="form-group">
+            <label asp-for="ExchangeApiInfo.ApiPrivate">Private/Secret API</label>
+            <input asp-for="ExchangeApiInfo.ApiPrivate" class="form-control" placeholder="Private API" />
+        </div>
+        <div class="form-group" id="apiForm_thirdKeyContainer" style="display:none">
+            <label asp-for="ExchangeApiInfo.ApiThirdKey"><span id="apiForm_thirdKeyTitle">Third Key</span></label>
+            <input asp-for="ExchangeApiInfo.ApiThirdKey" class="form-control" id="apiForm_thirdKeyInput" placeholder="" />
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <button type="button" class="btn btn-indigo" onclick="app.SubmitAddImportAPIForm()">Add API</button>
+                    <button class="btn" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    (function()
+    {
+        @if (Model.ExistingSavedImportAPIList.Any())
+        {
+            @: rj.Id('importAPIexistingRB').checked = true;
+            @: rj.Id('importAPIexistingRB').onchange();
+        }
+    })();
+
+    rj.AddEventListener("change", "#import-exchange-api-sl", function()
+    {
+        var selectedExchange = rj.GetSelectListValue('#import-exchange-api-sl');
+        switch (parseInt(selectedExchange))
+        {
+            case 5: // GDax
+                rj.Show('#apiForm_thirdKeyContainer', true);
+                rj.Id('apiForm_thirdKeyTitle').innerHTML = "Passphrase";
+                rj.Id('apiForm_thirdKeyInput').setAttribute('placeholder', 'Passphrase');
+                rj.Id('apiForm_thirdKeyInput').value = "pegatrade";
+                break;
+
+            default: 
+                rj.Show('#apiForm_thirdKeyContainer', false);
+                rj.Id('apiForm_thirdKeyTitle').innerHTML = "Third Key";
+                rj.Id('apiForm_thirdKeyInput').setAttribute('placeholder', '');
+                break;
+        }
+
+        rj.ForEach(rj.find('#apiImportTutorialContainer').querySelectorAll("[data-exchange]"), function (item) { rj.Show(item, false); }); // Hide all Tutorials
+        rj.Show(rj.find('#apiImportTutorialContainer').querySelector(rj.StringFormat("[data-exchange='{0}']", selectedExchange)), true); // Show Selected Tutorial
+    });
+</script>

@@ -1,0 +1,57 @@
+﻿@model List<PegaTrade.Layer.Models.Coins.MarketCoin>
+@{
+    ViewData["Title"] = "All Coins";
+    Layout = "_Layout";
+    ViewData["GrayBackground"] = true;
+}
+
+<div class="container">
+    <div class="default-block marginBottom20">
+        <div class="header"><h6>Top 100 Coins</h6></div>
+        <div class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-custom-condensed top-coins-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Market Cap</th>
+                                <th>Price</th>
+                                <th>Volume (24h)</th>
+                                <th>Change (24h)</th>
+                                <th>Change (7d)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Rank</td>
+                                    <td>
+                                        <div class="pull-left">
+                                            @{ string imgName = item.CoinMarketCapID + ".png"; }
+                                            <img src="~/lib/img/coins/size32/@imgName" height="24" width="24" />
+                                        </div>
+                                        <div class="pull-left">
+                                            <a href="/coin/@item.CoinMarketCapID" target="_blank" class="coinsymbol">@item.Name (@item.Symbol)</a>
+                                        </div>
+                                    </td>
+                                    <td class="small">$@item.MarketCapUsd.ToFormatNumber()</td>
+                                    <td class="@Utilities.CSS_PriceRoseDecline(item.PercentChange24h)">$@item.CurrentSymbolPriceUSD</td>
+                                    <td class="small">$@item.VolumeUsd24hr.ToFormatNumber()</td>
+                                    <td class="@Utilities.CSS_PriceRoseDecline(item.PercentChange24h)">@item.PercentChange24h%</td>
+                                    <td class="@Utilities.CSS_PriceRoseDecline(item.PercentChange7d)">@item.PercentChange7d%</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

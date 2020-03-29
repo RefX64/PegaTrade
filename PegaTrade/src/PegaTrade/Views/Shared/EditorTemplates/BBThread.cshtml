@@ -1,0 +1,38 @@
+﻿@using PegaTrade.Core.StaticLogic.Helper
+@model PegaTrade.Layer.Models.Community.BBThread
+@{ }
+
+<div class="conversation-container conv-border conv-hover" data-thread="@Model.ThreadId" onclick="app.OpenThreadWithComments(@Model.ThreadId)">
+    <div class="image-content">
+        <img src="@Model.User.GravatarImageLink()" alt="Avatar" class="img-circle avatar-image" style="margin-bottom: 5px;">
+        @Html.Raw(Model.TagCode.GenerateLabelHTML())
+    </div>
+    <div class="text-content">
+        <div onclick="event.stopPropagation()">
+            <a href="/viewuser/@Model.User.Username" target="_blank" onclick="app.ViewUserProfile('@Model.User.Username'); return false;" class="username"><b>@Model.User.Username</b></a>
+            @if (Model.ShowOfficialCoinNameOnThread)
+            {
+                <a href="/coin/@Model.OfficialCoin.Name" target="_blank" class="username-coin">($@Model.OfficialCoin.Symbol.ToUpperInvariant())</a>
+            }
+            <small class="pull-right color-gray">@Model.CreateDate</small>
+        </div>
+        <p>@Model.Message</p>
+        <div class="conv-options-holder" onclick="event.stopPropagation()">
+            <i class="ion-android-arrow-dropup-circle text-success conv-options" onclick="app.ConvOptionsClicked(this, event)"
+               data-action="vote" data-type="thread" data-upvote="true" data-id="@Model.ThreadId">@Model.VoteResult.TotalUpvotes</i>
+            <i class="ion-android-arrow-dropdown-circle text-danger conv-options" onclick="app.ConvOptionsClicked(this, event)"
+               data-action="vote" data-type="thread" data-upvote="false" data-id="@Model.ThreadId">@Model.VoteResult.TotalDownvote</i>
+            <i class="ion-chatboxes text-primary conv-options" onclick="app.ConvOptionsClicked(this, event)"
+               data-action="open" data-id="@Model.ThreadId">@Model.TotalComments</i>
+            @if (Model.CurrentLoggedInUserID == Model.UserId)
+            {
+                <i class="ion-ios-more conv-options-more" onclick="app.ToggleConvOption(this);"></i>
+                <div class="dark-app-dropdown">
+                    <div class="dropdown-content">
+                        <a href="javascript:void(0)" onclick="app.DeleteBBThread('@Model.ThreadId')">Delete</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

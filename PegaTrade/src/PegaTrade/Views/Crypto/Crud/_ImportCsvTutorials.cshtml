@@ -1,0 +1,76 @@
+﻿<div id="csvImportTutorialContainer" class="content">
+
+    @* Custom *@
+    <div id="csvImportCustom" class="" data-exchange="1">
+        <h4>Import Custom CSV file</h4>
+        <p>
+            You can create your own .csv file with trade history and import it here easily.<br /><br />
+            Expected .CSV file fomat: <span class="font-strong">Symbol(Currency-Coin), OrderType, Quantity, TotalPricePaid, OrderDate</span><br /><br />
+            <b>Example Format</b><small>(ANSI Encoding)</small><br />
+            BTC-BAT,buy,1800,0.088434,8/28/2017 1:12<br />
+            BTC-FCT,sell,15,0.10154999,8/29/2017 13:48<br />
+            BTC-DGB,buy,15000,0.05504999,8/28/2017 23:26<br />
+            BTC-MCO,sell,25,0.14942475,8/29/2017 1:57<br />
+            USDT-BTC,sell,.3,1473,9/1/2017 16:30<br />
+        </p>
+    </div>
+
+    @* BitTrex *@
+    <div id="csvImportBitTrex" class="" style="display: none;" data-exchange="2">
+        <h4>BitTrex CSV import</h4>
+        <img src="~/lib/img/exchanges/logo/bittrex.png" alt="BitTrex Exchange" height="30" /><br /><br />
+        <p>
+            1. Login into your Bittrex Account. <br />
+            2. Open <b>"Orders"</b> at the top menu. (<a href="https://bittrex.com/History" target="_blank">https://bittrex.com/History</a>) <br />
+            3. Click on the <b>"Load All"</b> button above the table. <br />
+            4. Save the CSV file on your PC and upload it below (<b class="text-danger">fullOrders.csv</b>).<br /><br />
+
+            Expected .CSV file format: <span class="font-strong">OrderUuid, Exchange, Type, Quantity, Limit, CommissionPaid, Price, Opened, Closed</span><br />
+        </p>
+    </div>
+
+    @* Kraken *@
+    <div id="csvImportKraken" class="" style="display: none;" data-exchange="3">
+        <h4>Kraken CSV import</h4>
+        <img src="~/lib/img/exchanges/logo/kraken.png" alt="Kraken Exchange" height="30" /><br /><br />
+        <p>
+            1. Login to your Kraken account and click on <b>History</b> -> <b>Export</b>. (<a href="https://www.kraken.com/u/history/export" target="_blank">https://www.kraken.com/u/history/export</a>) <br />
+            2. Make sure <b>trades</b> option is selected as the <b>"Export Data"</b>.<br />
+            3. Select your <b>time period</b> and then click on <b>Select All</b> on fields.<br />
+            4. Click on <b>Submit</b>, wait a few seconds, and then click on <b>Download</b> <small>(you may need to refresh the page to see the download Link)</small>. <br />
+            5. Unzip the file and upload the .CSV file below (<b class="text-danger">trades.csv</b>).<br /><br />
+
+            Expected .CSV file format: <span class="font-strong">"txid", "ordertxid", "pair", "time", "type", "ordertype", "price", "cost", ...(Omitted-Not needed)</span><br />
+        </p>
+    </div>
+
+    @* GDax *@
+    <div id="csvImportGDax" class="" style="display: none;" data-exchange="5">
+        <h4>GDax CSV import</h4>
+        <img src="~/lib/img/exchanges/logo/gdax.png" alt="GDax Exchange" height="30" /><br /><br />
+        <p>
+            1. Log in into your gdax.com account, click the notification icon (3 lines) and click on <b>Fills</b> (https://www.gdax.com/orders/fills/)<br />
+            2. Select your <b>CURRENCY PAIRS</b> (BTC/USD, ETH/USD, or LTC/USD) and hit <b>Download Receipt/Statement</b><br />
+            3. Choose a <b>time frame</b>. On Format, select <b>CSV</b> instead of PDF and click on <b>export</b><br />
+            4. You will receive your CSV file by email. Save it to your PC and upload it below (should be named <b class="text-danger">fills.csv</b>)<br /><br />
+
+            Expected .CSV file format: <span class="font-strong">trade id,product,side,created at,size,size unit,price,fee,total,...</span><br />
+        </p>
+    </div>
+
+    @* Binance *@
+    <div id="csvImportBinance" class="" style="display: none;" data-exchange="8">
+        <h4>Binance CSV import</h4>
+        <img src="~/lib/img/exchanges/logo/binance.png" alt="Binance Exchange" height="30" /><br /><br />
+        <p>
+            1. Login into your Binance Account. <br />
+            2. Click <b>"Orders"</b> at the top menu and choose <b>"Trade History"</b>. (<a href="https://www.binance.com/userCenter/tradeHistory.html" target="_blank">https://www.binance.com/userCenter/tradeHistory.html</a>) <br />
+            3. Click on the <b>"Export Complete Trade History"</b> link (Top right side). <br />
+            4. Choose your timeframe and click <b>"Export"</b> <br />
+            4. Save the xlsx file on your PC and upload it below (<b class="text-danger">TradeHistory.xlsx</b>).<br /><br />
+
+            Expected .xlsx file format: <span class="font-strong">Date, Market, Type, Price Amount, Total, Fee, Fee Coin</span><br />
+        </p>
+    </div>
+
+</div>

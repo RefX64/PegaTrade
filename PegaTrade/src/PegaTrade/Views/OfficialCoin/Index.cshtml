@@ -1,0 +1,21 @@
+﻿@model PegaTrade.ViewModel.Coins.OfficialCoinVM
+@{
+    ViewData["Title"] = Model.Identifier;
+    Layout = "_Layout";
+    ViewData["GrayBackground"] = true;
+}
+
+<div class="container">
+    <div class="row">
+        <div id="officialCoinContainer">
+            <div class="loadingDivDisplay"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+@section deferredscripts
+{
+    rj.AsyncLoad('officialCoinContainer', '@Url.Action("GetOfficialCoinView", "OfficialCoin")', { identifier: '@Model.Identifier' });
+}
+</script>

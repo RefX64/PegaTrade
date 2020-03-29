@@ -1,0 +1,37 @@
+﻿@model PegaTrade.ViewModel.PortfolioVM
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Display Type</th>
+            <th class="hidden-xs">Default</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Portfolios)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>
+                    @if (item.DisplayType == PegaTrade.Layer.Models.Types.PortfolioDisplayType.Private) { <span>@item.DisplayType.ToString()</span> }
+                    else
+                    {
+                        <a href="javascript:void(0)" onclick="alertify.alert('Public URL: <a>https://pegatrade.com/ViewPortfolio/@item.OwnerUsername/@Utilities.FormatPortfolioName(item.Name)</a>');">@item.DisplayType.ToString()</a>
+                    }
+                </td>
+                <td class="text-center hidden-xs"><input type="checkbox" asp-for="@item.IsDefault" class="checkbox" readonly="readonly" disabled="disabled" /></td>
+                <td>
+                    <a href="javascript:void(0)" data-loadmodal="" data-targetid="secondModal" data-url='@Url.Action("UpdatePortfolio", "Crypto")' class=""
+                       data-params="portfolioId=@item.PortfolioId" data-size="mid" data-title="Edit Portfolio" data-hidefooter>Edit</a> | 
+                    <a href="javascript:void(0)" onclick="app.DeletePortfolio(@item.PortfolioId)">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="javascript:void(0)" data-loadmodal data-targetid="secondModal" data-url='@Url.Action("CreateNewPortfolio", "Crypto")' 
+   class="btn btn-primary" data-size="mid" data-title="Create New Portfolio" data-hidefooter>Create New</a>
+<button class="btn" data-dismiss="modal">Close</button>

@@ -1,0 +1,42 @@
+﻿@model PegaTrade.ViewModel.Coins.CoinManagementVM
+
+@Html.Partial("Crud/_ImportCsvTutorials")    
+<p class="text-danger">Importing .csv file will overwrite all saved trades from current portfolio (Only from the selected exchange).</p>
+
+<form id="importTradeHistoryForm" method="post" enctype="multipart/form-data" class="marginTop40">
+    @Html.ValidationSummary()
+    <div class="row">
+        <div class="form-group paddingBottom20">
+            <div class="col-md-4">
+                <label>Select Exchange</label><br/>
+                <select asp-items="Model.CSVExchangesList()" id="import-exchange-csv-sl" name="exchange" class="form-control"></select>
+            </div>
+            <div class="col-md-8">
+                <label>Select the CSV file to upload</label><br/>
+                <input id="import-trade-file-select" type="file" name="file" accept=".csv, .xlsx"/>
+                <small class="help-block">Please make sure it is the un-modified file downloaded straight from your exchange.</small>
+            </div>
+        </div>
+    </div>
+    <div class="row paddingTop20">
+        <div class="form-group">
+            <div class="col-md-10">
+                <button id="submitImportTradeFormBtn" type="button" class="btn btn-indigo" onclick="app.SubmitImportTradeForm()"
+                        data-loading-text="Uploading... Please wait...">Upload</button>
+                <button class="btn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    (function()
+    {
+        rj.AddEventListener('change', '#import-exchange-csv-sl', function(e)
+        {
+            var targetExchangeId = e.target.value;
+            rj.ForEach(rj.Id('csvImportTutorialContainer').querySelectorAll("[data-exchange]"), function (item) { rj.Show(item, false); });
+            rj.Show(rj.Id('csvImportTutorialContainer').querySelector(rj.StringFormat("[data-exchange='{0}']", targetExchangeId)), true);
+        });
+    })();
+</script>

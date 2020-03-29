@@ -1,0 +1,152 @@
+﻿@using PegaTrade.Core.StaticLogic.Helper
+@using PegaTrade.Layer.Models
+@model PegaTrade.ViewModel.Coins.CoinsVM
+@{
+}
+
+@Html.Partial("_CoinSummaryBlocks", Model)
+
+<br />
+
+<div class="default-block light-top-border">
+
+    <ul id="mainCoinPortfolioTabs" class="nav nav-tabs tabs-teal" role="tablist">
+        <li role="presentation" class="active">
+            <a href="#portfolioCurrentHoldingCoins" onclick="app.PortfolioHoldingsTabChanged('current')" data-toggle="tab" data-height="true" aria-controls="portfolioCurrentHoldingCoins" role="tab">
+                <span class="hidden-xs">Current Holdings</span>
+                <span class="visible-xs">Current</span>
+            </a>
+        </li>
+        <li role="presentation">
+            <a href="#portfolioCurrentSoldCoins" onclick="app.PortfolioHoldingsTabChanged('sold')" data-toggle="tab" data-height="true" aria-controls="portfolioCurrentSoldCoins" role="tab">
+                <span class="hidden-xs">Sold Investments</span>
+                <span class="visible-xs">Sold</span>
+            </a>
+        </li>
+    </ul>
+
+    @if (!Model.ViewOtherUser)
+    {
+        <span class="pull-right" style="padding: 6px 18px; position: relative; top: -41px">
+            <button type="button" class="btn btn-aqua btn-sm" onclick="app.PTOpenAddNewCoinForm()">
+                <span class="hidden-xs">Add/Import Coins</span>
+                <span class="visible-xs">Add</span>
+            </button>
+        </span>
+    }
+
+    <div class="tab-content">
+
+        @* Holding Table *@
+        <div id="portfolioCurrentHoldingCoins" class="content tab-pane active" role="tabpanel">
+            <div class="row">
+                <div class="col-xs-8 col-sm-4">
+                    <input class="search form-control" placeholder="Search" />
+                </div>
+            </div>
+            <table class="table table-custom-condensed" id="holdingPortfolioTable" data-key="holdingPortfolioTable_key">
+                <thead>
+                    <tr>
+                        <th class="cursor-pointer" data-sorttable data-sortvalue="name">Symbol &nbsp; <span data-icon></span></th>
+                        <th class="hidden-xs">Shares</th>
+                        <th>
+                            <span class="hidden-xs">Avg Bought Price</span>
+                            <span class="visible-xs">Bought</span>
+                        </th>
+                        <th class="cursor-pointer" data-sorttable data-sortvalue="profit" data-sortfunction="ListJSCustomNumericSort">
+                            <span class="hidden-xs" data-sorttable>Profit/Loss &nbsp;</span>
+                            <span class="visible-xs" data-sorttable>P/L &nbsp;</span><span data-icon></span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="list">
+                    @foreach (var item in Model.HoldingCoins)
+                    {
+                        <tr>
+                            <td>
+                                <img src="~/lib/img/coins/size32/@item.MarketCoin.GetCoinImageName()" class="coinIcon-portfolioView" alt="Coin" />
+                                <span class="name"><label><a href="/coin/@item.MarketCoin.CoinMarketCapID" target="_blank">@item.Symbol</a></label></span>
+                                <span class="hidden-xs"><small>(@item.DisplayCurrentSymbolPriceCurrency())</small><br /></span>
+                                <div class="visible-xs"><small>($@item.MarketCoin.CurrentSymbolPriceUSD)</small></div>
+                                <small class="font-strong exchange-icon-holder-table">
+                                    <img src="~/lib/img/exchanges/sm/@item.GetExchangeIconImageSM()" class="exchange-icon-portfolio-table" alt="@item.Exchange.GetDescription()" title="@item.Exchange.GetDescription()" />
+                                    (Buy:@item.OrderDate.ToShortDateString())
+                                </small>
+                            </td>
+                            <td class="hidden-xs">
+                                @item.Shares.RemoveTrailingZero()
+                            </td>
+                            <td>
+                                @item.PricePerUnit.ToDecimalPrecision(8).RemoveTrailingZero()<br />
+                                <small class="color-gray">Total: @item.ViewPrice(Types.PriceValue.InitialBoughtValue)</small>
+                            </td>
+                            <td>
+                                <div class="@item.GenerateStockCSSBasedOnPL(textOnly: true)" style="font-weight: 500">
+                                    <span class="profit">@item.ViewPrice(Types.PriceValue.CurrentProfitLoss)</span> (@item.CalculatePercentageChange().ToTwoDigit()%)
+                                    @if (!Model.ViewOtherUser)
+                                    {
+                                        <a href="javascript:void(0)" class="pull-right color-gray-devil" onclick="app.PTOpenUpdateCoinForm(@item.CoinId, '@item.IsCurrentlyCombined')">
+                                            <span class="ion-compose" style="font-size: 16px;"></span>
+                                        </a>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <ul class="pagination"></ul>
+        </div>
+
+        @* Sold Table *@
+        <div id="portfolioCurrentSoldCoins" class="content tab-pane" role="tabpanel">
+            <div class="row">
+                <div class="col-xs-8 col-sm-4">
+                    <input class="search form-control" placeholder="Search" />
+                </div>
+            </div>
+            <table class="table" id="soldPortfolioTable" data-key="soldPortfolioTable_key">
+                <thead>
+                    <tr>
+                        <th class="cursor-pointer" data-sorttable data-sortvalue="name">Symbol &nbsp; <span data-icon></span></th>
+                        <th class="hidden-xs">Shares</th>
+                        <th>
+                            <span class="hidden-xs">Avg Sold Price</span>
+                            <span class="visible-xs">Sold</span>
+                        </th>
+                        <th class="cursor-pointer" data-sorttable data-sortvalue="profit" data-sortfunction="ListJSCustomNumericSort">
+                            <span class="hidden-xs" data-sorttable>Profit/Loss &nbsp;</span>
+                            <span class="visible-xs" data-sorttable>P/L &nbsp;</span><span data-icon></span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="list">
+                    @foreach (var item in Model.SoldCoins)
+                    {
+                        <tr>
+                            <td>
+                                <img src="~/lib/img/coins/size32/@item.MarketCoin.GetCoinImageName()" class="coinIcon-portfolioView" alt="Coin" /><span class="name">@item.Symbol</span> (@item.PricePerUnit.ToDecimalPrecision(8).RemoveTrailingZero())<br />
+                                <small class="color-gray-devil">Bought: @item.ViewPrice(Types.PriceValue.InitialBoughtValue)</small>
+                            </td>
+                            <td class="hidden-xs">@item.Shares.RemoveTrailingZero()</td>
+                            <td>
+                                @item.SoldPricePerUnit.GetValueOrDefault().ToDecimalPrecision(8).RemoveTrailingZero() <br />
+                                <small class="color-gray">Sold: @item.ViewPrice(Types.PriceValue.SoldEndValue) (@item.OrderDate.ToShortDateString())</small>
+                            </td>
+                            <td>
+                                <div class="@item.GetSoldProfitCSS()" style="font-weight: 500">
+                                    <span class="profit">@item.ViewPrice(Types.PriceValue.SoldProfitLoss)</span> (@item.CalculateSoldPercentageChange().ToTwoDigit()%)
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <ul class="pagination"></ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () { app.View_FullCoinsLoaded(); })();
+</script>

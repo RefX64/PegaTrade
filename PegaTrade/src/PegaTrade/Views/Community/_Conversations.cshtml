@@ -1,0 +1,20 @@
+﻿@model PegaTrade.ViewModel.Community.ConversationsVM
+@{ }
+
+@if (!Model.HideCreateNewPost)
+{
+    <div class="default-block marginBottom20">
+        <div class="header"><h6>Post a status update</h6></div>
+        <div class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    @Html.Partial("~/Views/Community/Crud/_CreateThreadOrComment.cshtml", Model)
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="default-block light-top-border">
+    @Html.EditorFor(m => m.Threads)
+</div>

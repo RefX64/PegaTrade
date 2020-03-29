@@ -1,0 +1,35 @@
+﻿@using PegaTrade.Layer.Models.Account
+@model PegaUser
+@{}
+
+<div class="row">
+    <div class="col-xs-6" style="border-right: 2px solid #dedede;">
+        <strong>Please login to see your portfolio</strong>
+        <form id="loginAccountForm" asp-action="Login" asp-controller="Account" asp-antiforgery="true" onkeypress="pega.SubmitFormOnEnterPressed(event, app.SubmitLoginForm)"
+              onsubmit="return false">
+            @Html.ValidationSummary()
+            <div class="form-group">
+                <label asp-for="Username">Username/Email</label>
+                <input asp-for="Username" class="form-control" placeholder="Username/Email" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" type="password" class="form-control" />
+            </div>
+            <div class="form-group">
+                <div id="recaptcha-login" class="g-recaptcha" data-sitekey="xxx"></div>
+            </div>
+
+            <p class="text-danger" id="loginMessageError"></p>
+
+            <button id="userLoginBtn" type="button" class="btn btn-aqua" onclick="app.SubmitLoginForm()" data-loading-text="Logging in...">Login</button>
+            <button class="btn" data-dismiss="modal">Close</button>
+            <a href="javascript:void(0)" style="font-size: 80%" onclick="app.PTOpenForgotPassowrdForm()">Forgot Password?</a>
+        </form>
+    </div>
+
+    <div class="col-xs-6">
+        <p class="font-strong">If you do not have an account, you can sign up very easily!</p>
+        <button type="button" class="btn btn-indigo" onclick="app.PTOpenCreateForm()">Signup</button>
+    </div>
+</div>

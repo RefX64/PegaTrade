@@ -1,0 +1,44 @@
+﻿@model PegaTrade.ViewModel.Coins.CoinManagementVM
+@{}
+
+<form id="coinMarkAsSoldForm" asp-action="MarkCoinSold" asp-controller="Crypto" asp-antiforgery="true">
+    @Html.ValidationSummary()
+    <input type="hidden" asp-for="Coin.CoinId" />
+    <input type="hidden" asp-for="Coin.PortfolioId" />
+    <input type="hidden" asp-for="Coin.Symbol" />
+    <input type="hidden" asp-for="Coin.Shares" />
+    <input type="hidden" asp-for="Coin.PricePerUnit" />
+    <label asp-for="Coin.Symbol">Sold Coin: &nbsp;</label>@Model.Coin.Symbol<br />
+    <label asp-for="Coin.Shares">Shares: &nbsp;</label>@Model.Coin.Shares<br />
+    <label asp-for="Coin.PricePerUnit">Bought Price per unit: &nbsp;</label>@Model.Coin.PricePerUnit<br />
+    <label asp-for="Coin.TotalPricePaidUSD">Total Price Paid: &nbsp;</label>@Model.Coin.TotalPricePaidUSD<br /><br />
+
+    <div class="form-group">
+        <label asp-for="SoldDate">Sold Date</label> <small class="color-gray-devil">When did you sell this coin?</small>
+        <input asp-for="SoldDate" type="date" class="form-control" placeholder="Sold Date" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Coin.SoldCoinCurrency">Sold Currency</label> <small class="color-gray-devil">What currency did you sell it at?</small>
+        <select asp-for="Coin.SoldCoinCurrency" asp-items="Model.AvailableCurrencyList" class="form-control" placeholder="Sold Currency (e.g. BTC, USD)"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Coin.SoldPricePerUnit">Sold Price Per Unit</label> <a href="javascript:void(0)" class="small" onclick="GetLatestPriceOfSoldCoin()">Get Latest Price</a>
+        <input asp-for="Coin.SoldPricePerUnit" type="text" class="form-control" placeholder="Sold Price Per Unit (e.g. .0005)" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Coin.TotalSoldPricePaidUSD">Total Sold Price USD</label> <small class="color-gray-devil">(optional) Will be auto-generated based on <b>sold date</b> if left empty.</small>
+        <input asp-for="Coin.TotalSoldPricePaidUSD" class="form-control" placeholder="(Optional) Total Sold Price in USD (e.g. 325)" />
+    </div>
+
+    <button type="button" class="btn btn-primary" onclick="app.SubmitCoinMaskAsSoldForm()">Submit Sold</button>
+    <button class="btn" data-dismiss="modal">Close</button>
+</form>
+
+<script>
+    function GetLatestPriceOfSoldCoin()
+    {
+        var coinSymbol = '@Model.Coin.Symbol.Split("-")[1]';
+        var coinCurrency = rj.GetSelectListText('#@Html.IdFor(m => m.Coin.SoldCoinCurrency)');
+        app.GetLatestPriceOfCoinBasedOnSymbol(rj.StringFormat('{0}-{1}', coinCurrency, coinSymbol), '@Html.IdFor(m => m.Coin.SoldPricePerUnit)');
+    }
+</script>

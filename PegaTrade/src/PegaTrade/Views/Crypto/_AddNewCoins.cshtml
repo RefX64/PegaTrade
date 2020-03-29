@@ -1,0 +1,49 @@
+﻿@model PegaTrade.ViewModel.Coins.CoinManagementVM
+@{
+    
+}
+
+<ul id="coinsManagementTab" class="nav nav-tabs tabs-indigo" role="tablist">
+    <li role="presentation" class="active">
+        <a href="#coinManagementManualAdd" data-toggle="tab" data-height="true" aria-controls="coinManagementManualAdd" role="tab">Create Manually</a>
+    </li>
+    <li role="presentation">
+        <a href="#coinManagementAPIimport" data-toggle="tab" data-height="true" aria-controls="coinManagementAPIimport" role="tab">Import from API</a>
+    </li>
+    <li role="presentation">
+        <a href="#coinManagementCSVImport" data-toggle="tab" data-height="true" aria-controls="coinManagementCSVImport" role="tab">Import from CSV file</a>
+    </li>
+    <li role="presentation">
+        <a href="#coinManagementEtherAddressImport" data-toggle="tab" data-height="true" aria-controls="coinManagementEtherAddressImport" role="tab">Import Ether Address</a>
+    </li>
+</ul>
+
+<div class="tab-content marginTop20">
+    <!-- ### Manual Add -->
+    <div role="tabpanel" class="tab-pane active" id="coinManagementManualAdd">
+        @Html.Partial("Crud/_ManageCoin", Model)
+    </div>
+
+    <!-- ### API Import -->
+    <div role="tabpanel" class="tab-pane" id="coinManagementAPIimport">
+        @* _ImportCoinsFromAPI. VM->GetAllAvailableAPIs. o Use Existing API o Add New API (There are currently no API available. Please create a new one.) *@
+        @Html.Partial("Crud/_ImportCoinsFromAPI", Model)
+    </div>
+
+    <!-- ### CSV Import -->
+    <div role="tabpanel" class="tab-pane" id="coinManagementCSVImport">
+        @Html.Partial("Crud/_ImportTradeHistory", Model)
+    </div>
+
+    <!-- ### Ether Address Import -->
+    <div role="tabpanel" class="tab-pane" id="coinManagementEtherAddressImport">
+        @Html.Partial("Crud/_ImportEtherAddress", new PegaTrade.Layer.Models.Coins.ExchangeApiInfo())
+    </div>
+</div>
+
+<script>
+    (function()
+    {
+        var coinManagementTab = new Tab(rj.Id('coinsManagementTab'));
+    })();
+</script>

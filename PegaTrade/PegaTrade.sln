@@ -1,0 +1,73 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FE3A0FDB-EF1F-408E-B588-4E295528BBF2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7521C859-9427-4763-9887-69FEBF83DF90}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PegaTrade", "src\PegaTrade\PegaTrade.csproj", "{C6FCF00E-4231-45F8-98A2-101A82AEEBD4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PegaTrade.Core", "src\PegaTrade.Core\PegaTrade.Core.csproj", "{742AD26A-DB82-4689-8ECA-FF9024CDFFB8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PegaTrade.Layer", "src\PegaTrade.Layer\PegaTrade.Layer.csproj", "{F210E6A8-51C5-44B9-91A7-D09633E8FAC6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PegaTrade.Tests", "PegaTrade.Tests\PegaTrade.Tests.csproj", "{4D1DB7D6-5784-4CC1-B58E-E0F2C3A1C7D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C6FCF00E-4231-45F8-98A2-101A82AEEBD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6FCF00E-4231-45F8-98A2-101A82AEEBD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6FCF00E-4231-45F8-98A2-101A82AEEBD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6FCF00E-4231-45F8-98A2-101A82AEEBD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{742AD26A-DB82-4689-8ECA-FF9024CDFFB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{742AD26A-DB82-4689-8ECA-FF9024CDFFB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{742AD26A-DB82-4689-8ECA-FF9024CDFFB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{742AD26A-DB82-4689-8ECA-FF9024CDFFB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F210E6A8-51C5-44B9-91A7-D09633E8FAC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F210E6A8-51C5-44B9-91A7-D09633E8FAC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F210E6A8-51C5-44B9-91A7-D09633E8FAC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F210E6A8-51C5-44B9-91A7-D09633E8FAC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D1DB7D6-5784-4CC1-B58E-E0F2C3A1C7D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D1DB7D6-5784-4CC1-B58E-E0F2C3A1C7D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D1DB7D6-5784-4CC1-B58E-E0F2C3A1C7D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D1DB7D6-5784-4CC1-B58E-E0F2C3A1C7D3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C6FCF00E-4231-45F8-98A2-101A82AEEBD4} = {FE3A0FDB-EF1F-408E-B588-4E295528BBF2}
+		{742AD26A-DB82-4689-8ECA-FF9024CDFFB8} = {FE3A0FDB-EF1F-408E-B588-4E295528BBF2}
+		{F210E6A8-51C5-44B9-91A7-D09633E8FAC6} = {FE3A0FDB-EF1F-408E-B588-4E295528BBF2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1896F0F6-C879-42CE-BCDE-2FB349EE3A06}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://drpdev.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = src\\PegaTrade.Core\\PegaTrade.Core.csproj
+		SccProjectTopLevelParentUniqueName1 = PegaTrade.sln
+		SccProjectName1 = src/PegaTrade.Core
+		SccLocalPath1 = src\\PegaTrade.Core
+		SccProjectUniqueName2 = src\\PegaTrade.Layer\\PegaTrade.Layer.csproj
+		SccProjectTopLevelParentUniqueName2 = PegaTrade.sln
+		SccProjectName2 = src/PegaTrade.Layer
+		SccLocalPath2 = src\\PegaTrade.Layer
+		SccProjectUniqueName3 = src\\PegaTrade\\PegaTrade.csproj
+		SccProjectTopLevelParentUniqueName3 = PegaTrade.sln
+		SccProjectName3 = src/PegaTrade
+		SccLocalPath3 = src\\PegaTrade
+		SccProjectUniqueName4 = PegaTrade.Tests\\PegaTrade.Tests.csproj
+		SccProjectName4 = PegaTrade.Tests
+		SccLocalPath4 = PegaTrade.Tests
+	EndGlobalSection
+EndGlobal

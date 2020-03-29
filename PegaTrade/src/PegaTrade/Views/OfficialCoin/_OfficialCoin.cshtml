@@ -1,0 +1,93 @@
+﻿@using PegaTrade.Layer.Models.Coins
+@model PegaTrade.ViewModel.Coins.OfficialCoinVM
+@{
+    OfficialCoin coin = Model.OfficialCoin;
+}
+
+<div class="col-xs-12 col-md-10 col-md-offset-1">
+    <div class="row">
+        <div class="default-block">
+            <div class="content">
+                <div class="col-xs-2 col-sm-2">
+                    <img src="~/lib/img/coins/size32/@coin.MarketCoin.GetCoinImageName()" class="center-block" style="margin-bottom: 21px;" />
+                    <span class="label label-success center-block"><span class="hidden-xs">Rank </span>@coin.MarketCoin.Rank</span>
+                </div>
+                <div class="col-xs-4 col-sm-4">
+                    <h2>@coin.MarketCoin.Name (@coin.Symbol)</h2>
+                    <p style="margin: 10px 0 3px 0; font-size: 115%;">
+                        <b>$@coin.MarketCoin.CurrentSymbolPriceUSD</b> 
+                        <span class="@Utilities.CSS_PriceRoseDecline(coin.MarketCoin.PercentChange24h)">@coin.MarketCoin.PercentChange24h%</span> <br />
+                        (<small>7d: <span class="@Utilities.CSS_PriceRoseDecline(coin.MarketCoin.PercentChange7d)">@coin.MarketCoin.PercentChange7d%</span></small>)
+                    </p>
+                    <p style="color: #96810b">
+                        @coin.MarketCoin.CurrentSymbolPriceBTC BTC
+                    </p>
+                </div>
+                <div class="col-xs-4 col-sm-3 col-md-2">
+                    <label>Market Cap</label>
+                    <p>$@coin.MarketCoin.MarketCapUsd.ToFormatNumber()</p>
+                </div>
+                <div class="col-xs-4 col-sm-3 col-md-2">
+                    <label>Volume (24h)</label>
+                    <p>$@coin.MarketCoin.VolumeUsd24hr.ToFormatNumber()</p>
+                </div>
+                <div class="col-xs-4 col-sm-3 col-md-2">
+                    <label>Current Supply</label>
+                    <p>$@coin.MarketCoin.AvailableSupply.ToFormatNumber()</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-10 col-md-offset-1 marginBottom20">
+    <div class="row">
+        <div class="default-block">
+            <div class="header"><h4>@coin.Symbol Chart</h4></div>
+            <div class="content">Coming soon...</div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-10 col-md-offset-1">
+    <div class="row">
+        <div class="default-block" style="min-height: 45px;">
+            <ul id="officialCoinConvTabs" class="nav nav-tabs tabs-navyBlue" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#officialCoinMainConvTab" data-toggle="tab" data-height="true" aria-controls="officialCoinMainConvTab" role="tab">Discussion</a>
+                </li>
+                <li role="presentation">
+                    <a href="#officialCoinSocialTab" data-toggle="tab" data-height="true" aria-controls="officialCoinSocialTab" role="tab">Social Media</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-10 col-md-offset-1 marginBottom20">
+    <div class="row">
+        <div class="tab-content">
+            <div id="officialCoinMainConvTab" class="content tab-pane active">
+                <div id="conversationsHolder">
+                    @Html.Partial("~/Views/Community/_Conversations.cshtml", Model.ConversationsVM)
+                </div>
+            </div>
+            <div id="officialCoinSocialTab" class="content tab-pane">
+                <div class="default-block marginBottom20">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <p>More social media addons (including related to this coin) coming soon.</p>
+                                <p>In the meantime, please follow us on Twitter: <a href="https://twitter.com/PegaTrade" target="_blank">@@PegaTrade</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () { app.View_GetOfficialCoinLoaded(); })();
+</script>

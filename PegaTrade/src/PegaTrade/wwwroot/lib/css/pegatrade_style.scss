@@ -1,0 +1,986 @@
+﻿/*#region Definitions SCSS */
+// Section: Top Nav
+$navLinkHoverColor: #a4e597; 
+$navBarDefaultColor: linear-gradient(45deg, #8f78db, #ab9ae5);
+$navBarMenuHoverColor: #2ea09a;
+
+// Side Nav
+$sideNavLinkHoverColor: #a4e597; 
+$sideNavBarSideBackground: #30373e; 
+
+// All other colors (General)
+$linkColor: #379c94;
+$linkHoverColor: #2cb9ad;
+$gradientBackground1: linear-gradient(120deg, #379c94, #58d5cc);
+$indigoColor: #39489c;
+$tealColor: #41aea6;
+$aquaColor: #2EA09A;
+
+// Font
+$robotoFont: 'Roboto', sans-serif;
+$openSansFont: 'Open Sans', sans-serif; // Not inserted into doc yet. Don't like it too much.
+$defaultFontSize: 16px;
+
+// Others
+$buttonTransition: all 0.25s ease 0s;
+$footerHeight: 80px; // Home page
+$userFooterHeight: 120px; // Admin/User Panel (Change: app.HideAdminSideBar() as well)
+
+// Mixins example: @mixin radius($radius) { border-radius: $radius; }, .box { @include radius(10); }
+// Extend example: .message { color: #333; }, .success { @extend .message; border-color: green; }
+// Math example: (width: 600px / 900px * 100%) -> (width: 66%;)
+// DEVICE LIST: Use them with media queries.
+$xs-min: "min-width:0px";
+$sm-min: "min-width:768px";
+$md-min: "min-width:992px";
+$lg-min: "min-width:1200px";
+
+// SideBar/Page size
+$sidebar-xs-width: 40px;
+$sidebar-sm-width: 220px;
+
+/*#endregion */
+
+// Tips
+// Material Colors: https://material.io/guidelines/style/color.html#color-color-palette
+
+/*#region General */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    color: #212121;
+    font-family: $robotoFont;
+    font-size: $defaultFontSize;
+    background-color: #f4f4f4;
+    // overflow-x: hidden; - Use this on XS to get rid of scrollbar
+}
+
+.footer {
+    font-size: 80%;
+    width: 100%;
+}
+.footer-body {
+    // Use this on the regular Layout page. Not the Admin-Footer page.
+    margin-bottom: $footerHeight;
+}
+.footer-sticky-bottom {
+    position: absolute;
+    bottom: 0;
+    height: $footerHeight;
+}
+
+.footer-dark {
+    background-color: $sideNavBarSideBackground;
+    color: #fff;
+
+    hr {
+        border-top: 1px solid #25272b;
+    }
+
+    a {
+        color: #83cac4;
+
+        &:hover {
+            color: #74f3e8;
+        }
+    }
+}
+
+@media ($xs-min) {
+    .user-footer-sticky-bottom {
+        position: absolute;
+        bottom: 0;
+        height: $userFooterHeight;
+        margin: 0 0 0 (-$sidebar-xs-width);
+
+        .content {
+            margin: 0 0 0 ($sidebar-xs-width + 5px);
+        }
+    }
+}
+
+@media ($sm-min) {
+    .user-footer-sticky-bottom {
+        margin: 0 0 0 (-$sidebar-sm-width);
+
+        .content {
+            margin: 0 0 0 $sidebar-sm-width;
+        }
+    }
+}
+
+:focus, a:focus {
+    outline: 0;
+}
+
+a {
+    color: $linkColor;
+
+    &:hover, &:focus {
+        color: $linkHoverColor;
+        text-decoration: none;
+    }
+}
+
+b, strong, th {
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+small, .small {
+    font-size: 82%;
+}
+
+.label {
+    font-weight: 500;
+}
+
+#wrapper {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.nav {
+}
+
+.navbar {
+    border-radius: 0px;
+    min-height: 30px;
+    background-color: #fff;
+    border: none;
+}
+
+// Admin/User Mode
+
+#adminNavTopBar {
+    border-bottom: 1px solid #333;
+
+    .navbar-toggle {
+        padding: 3px 10px;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+}
+
+#adminNavTopBarChild {
+    .navbar-nav {
+        margin: 0px;
+    }
+}
+
+.no-collapse-navBar {
+    .navbar-collapse.collapse {
+        display: block !important;
+    }
+
+    .navbar-nav > li, .navbar-nav {
+        float: left !important;
+    }
+
+    .navbar-nav.navbar-right:last-child {
+        margin-right: -15px !important;
+    }
+
+    .navbar-right {
+        float: right !important;
+    }
+}
+
+.navbar-user-top-custom {
+    
+    .nav li a {
+        color: #333;
+        font-weight: 500;
+        margin: 0px 4px;
+        border-radius: 0px;
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .nav li a:focus, .nav li a:hover {
+        color: $navBarMenuHoverColor;
+        background-color: #fff;
+    }
+}
+
+.dropdown-menu {
+    border-radius: 0px;
+}
+.dropdown-submenu > .dropdown-menu {
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+.dropdown-submenu > a:after {
+    border-left-color: #333;
+}
+
+.dropdown-submenu:hover > a:after {
+    border-left-color: $navBarMenuHoverColor;
+}
+
+.navbar-static-side, .nav-header, #page-wrapper {
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+// Home page: Top menu
+.navbar-custom-pt {
+    background-color: #30373e;
+    
+    li {
+        a {
+            font-size: 15px;
+            font-weight: 500;
+        }
+    }
+}
+
+// Section Side Menu
+
+.nav-side {
+    a.active {
+        background: $gradientBackground1;
+        color: white;
+    }
+
+    li.active {
+        /*border-left: 4px solid #19aa8d;*/
+    }
+
+    li {
+        a {
+            padding: 10px 15px;
+            color: #999;
+            position: relative;
+            display: block;
+            vertical-align: middle;
+            padding: 8px 12px;
+            font-weight: 300;
+            margin: 0px 12px;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        a:focus, a:hover {
+            text-decoration: none;
+            color: $navLinkHoverColor;
+            background-color: inherit;
+        }
+    }
+
+    .nav-header {
+        padding: 15px 25px;
+    }
+
+    .nav-header-xs {
+        padding: 5px 25px;
+        color: #fff;
+        padding: 0px 10px 10px
+    }
+}
+
+@media ($xs-min) {
+    .navbar-static-side {
+        width: $sidebar-xs-width;
+        z-index: 100;
+        position: absolute;
+        background-color: $sideNavBarSideBackground;
+        height: 100%;
+        padding-top: 10px;
+
+        a {
+            cursor: pointer;
+
+            span:hover, span:focus {
+                color: $navLinkHoverColor;
+                transition: ease-in .25s;
+            }
+        }
+
+        .navbar-collapse {
+            border: none;
+            -webkit-box-shadow: none;
+        }
+
+        .nav {
+            /*padding-top: 40px;*/
+        }
+
+        .nav li a {
+            margin: 0px;
+            border-radius: 0px;
+        }
+
+        .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+            background: $gradientBackground1;
+        }
+
+        .nav li a.active {
+            border-radius: 0px;
+        }
+    }
+}
+
+@media ($sm-min) {
+    .navbar-static-side {
+        width: $sidebar-sm-width;
+
+        .nav li a {
+            padding: 8px 12px;
+            margin: 0px 12px;
+        }
+
+        .header-menu.active {
+            color: #fff
+        }
+
+        .header-menu:after {
+            font-family: 'Ionicons';
+            content: "\f104";
+            float: right;
+            font-size: 16px;
+        }
+
+        .header-menu.collapsed:after {
+            content: "\f10a"; // Arrow-Right
+        }
+
+        a:hover, a.focus, a:active, a:visited {
+            /*color: $navLinkHoverColor;*/
+            transition: ease-in .25s;
+        }
+    }
+}
+
+.side-menu-ul {
+    list-style: none;
+    padding-left: 16px;
+
+    .subitem-icon {
+        font-size: 12px;
+        margin-right: 10px;
+    }
+}
+
+#tempfirsta:after {
+    /* symbol for "opening" panels */
+    font-family: 'Ionicons'; /* essential for enabling glyphicon */
+    content: "\f35f"; /* adjust as needed, taken from bootstrap.css */
+    float: right; /* adjust as needed */
+    color: grey; /* adjust as needed */
+}
+
+#tempfirsta.collapsed:after {
+    font-family: 'Ionicons'; /* essential for enabling glyphicon */
+    content: "\f363"; /* adjust as needed, taken from bootstrap.css */
+    float: right; /* adjust as needed */
+    color: grey; /* adjust as needed */
+}
+
+.side-menu-ul-xs {
+    list-style: none;
+    left: 39px;
+    top: -3px;
+    border-radius: 0px;
+    background-color: $sideNavBarSideBackground;
+
+    li {
+        a {
+            color: #fff;
+        }
+
+        a:hover, a.focus, a:active, a:visited {
+            transition: ease-in .25s;
+        }
+    }
+}
+
+// Tip/Note: @Media (). xs-min or the lowest needs is the BASE. It should hold ALL permanent css. >= sm-min are just changes css.
+
+#page-wrapper {
+    @media ($xs-min) {
+        position: inherit;
+        padding: 0;
+        margin: 0 0 $userFooterHeight $sidebar-xs-width;
+
+        .container {
+            width: 100%;
+        }
+    }
+
+    @media ($sm-min) {
+        margin: 0 0 $userFooterHeight $sidebar-sm-width;
+        padding: 0 15px;
+    }
+
+    @media ($lg-min) {
+        .container {
+            width: 90%;
+        }
+    }
+}
+
+#partialBody { }
+
+// Forms/Validations
+
+label {
+    font-weight: 500;
+}
+
+.form-control:focus {
+    border-color: #61666b;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(50, 58, 65, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(50, 58, 65, 0.6);
+}
+
+// Section Tabs
+ul, ol {
+    margin-top: 0;
+}
+
+.nav-tabs {
+    border-bottom: 2px solid #eee;
+    padding: 0;
+    background: transparent;
+    font-size: 14px;
+
+    li {
+        position: relative;
+        top: 1px;
+        height: 42px;
+
+        a {
+            margin: 0;
+            padding: 10px 34px;
+            border-radius: 0;
+            font-weight: 400;
+            border-style: none;
+            color: #999;
+        }
+
+        a:hover {
+            color: #000;
+        }
+    }
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    border-style: none;
+    border-bottom: 2px solid #c72e4c;
+    border-radius: 0px;
+}
+
+.tabs-indigo {}
+.tabs-indigo > li.active > a, 
+.tabs-indigo > li.active > a:hover,
+.tabs-indigo > li.active > a:focus {
+    border-color: $indigoColor;
+}
+
+.tabs-teal {}
+.tabs-teal > li.active > a,
+.tabs-teal > li.active > a:hover,
+.tabs-teal > li.active > a:focus {
+    border-color: $tealColor;
+}
+
+.tabs-navyBlue {}
+.tabs-navyBlue > li.active > a,
+.tabs-navyBlue > li.active > a:hover,
+.tabs-navyBlue > li.active > a:focus {
+    border-color: #31708f;
+}
+
+/*#endregion */
+
+/*#region Tools, Tables, Objects, Etc. */
+
+.table-custom-condensed {
+    tbody > tr > td {
+        padding: 4px 8px 0px 8px;
+    }
+}
+
+.default-block {
+    background: #fff;
+    min-height: 50px;
+    box-shadow: none;
+    position: relative;
+    transition: .5s;
+    border: 1px solid #f2f2f2;
+    border-top: 1px solid rgb(158, 162, 162);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color: rgba(0,0,0, 0.87);
+    display: inline-block;
+    width: 100%;
+
+    .header {
+        color: #000;
+        padding: 5px 0px 0px 15px;
+        position: relative;
+        box-shadow: none;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 0px;
+        margin: 0;
+        background-color: #fff;
+
+        h2 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: normal;
+            color: #111;
+            text-transform: uppercase;
+        }
+
+        h5 {
+            font-size: 12px;
+            color: #777;
+            margin-top: 4px;
+            margin-bottom: 0px;
+        }
+
+        h6 {
+            font-size: 15px;
+        }
+    }
+
+    .light {
+        font-size: 14px;
+        color: #808080;
+    }
+
+    .content {
+        font-size: 14px;
+        color: #444;
+        padding: 15px;
+        font-weight: 400;
+
+        h2 {
+            font-size: 22px;
+            font-weight: 500;
+            margin-top: -4px;
+            margin-bottom: -4px;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 500;
+        }
+    }
+}
+
+.pagination {
+    border-radius: 0px !important;
+
+    li > a, li > span {
+        border: none;
+        color: #252525;
+        font-weight: 500;
+    }
+
+    li:first-child > a, li:first-child > span,
+    li:last-child > a, li:last-child > span {
+        border-radius: 0px;
+    }
+
+    .active > a, .active > span, .active > a:hover, active > span:hover {
+        background-color: $aquaColor;
+        border-color: $linkColor;
+    }
+}
+
+/*#endregion */
+/*#region Coins, Profit/Loss Calculations, Etc. */
+@media ($xs-min) {
+    .exchange-icon-holder-table {
+        padding-left: 0px;
+    }
+}
+@media ($sm-min) {
+    .exchange-icon-holder-table {
+        padding-left: 39px;
+    }
+}
+
+.exchange-icon-portfolio-table {
+    height: 16px;
+    width: 15px;
+    padding-bottom: 2px;
+    opacity: .6;
+}
+
+table .name a {
+    color: #17191b;
+    &:hover {
+        color: #4e4d4d;
+        text-decoration: none;
+    }
+}
+
+.price-rose-text {
+    color: #00ACC1;
+}
+
+.price-fell-text {
+    color: #b91212;
+}
+
+.coinrose-good-text {
+    color: #26C6DA;
+}
+
+.coinrose-better-text {
+    color: #00ACC1;
+}
+
+.coinrose-best-text {
+    color: #00838F;
+}
+
+.coinfell-bad-text {
+    color: #EF5350;
+}
+
+.coinfell-worse-text {
+    color: #E53935;
+}
+
+.coinfell-worst-text {
+    color: #B71C1C;
+}
+
+.coinrose-good {
+    background-color: #67e667;
+    color: black;
+}
+
+.coinrose-better {
+    background-color: #4CAE4C;
+    color: black;
+}
+
+.coinrose-best {
+    background-color: #008b5e;
+    color: white;
+}
+
+.coinfell-bad {
+    background-color: #fd7279;
+    color: black;
+}
+
+.coinfell-worse {
+    background-color: #bc2f36;
+    color: white;
+}
+
+.coinfell-worst {
+    background-color: #821620;
+    color: white;
+}
+
+.coinIcon {
+    display: block;
+    height: 32px;
+    width: 32px;
+}
+
+.coinIcon-portfolioView {
+    display: block;
+    height: 24px;
+    width: 24px;
+    float: left;
+    margin-right: 15px;
+}
+
+.top-coins-table {
+    tbody > tr > td {
+        padding: 12px 8px 8px 8px;
+    }
+
+    img {
+        margin: -3px 16px 0px 0px;
+    }
+
+    .coinsymbol {
+        color: #333;
+        font-weight: 500;
+        
+        &:hover {
+            color: #666;
+        }
+    }
+}
+
+/*#endregion */
+/*#region Conversations/Community*/
+.conversation-container {
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    width: 100%;
+    /*overflow: hidden; This might be needed later. However, currently it hides dropdown. */
+    padding: 15px;
+
+    .text-content {
+        width: 100%;
+    }
+
+    .image-content {
+        margin-right: 15px;
+        max-width: 48px;
+    }
+
+    .avatar-image {
+        height: 48px;
+        width: 48px;
+    }
+
+    .username {
+        color: #333;
+
+        &:hover {
+            color: #666;
+        }
+    }
+
+    .username-coin {
+        color: #5870f5;
+
+        &:hover {
+            color: #57429c;
+        }
+    }
+}
+
+.conv-border {
+    border-bottom: 1px solid rgba(0,0,0,.075);
+}
+
+.conv-hover {
+    &:hover {
+        background-color: #f6f6f6;
+        /*border-left: 3px solid #379c94;*/
+        transition: .5s;
+        cursor: pointer;
+    }
+}
+
+.conv-options-holder {
+    i {
+        margin-right: 10px;
+    }
+}
+
+.conv-options {
+    &:hover {
+        color: #30373e;
+    }
+}
+
+.conv-options-more {
+    border: 1px solid #999;
+    border-radius: 50%;
+    padding: 0 5px 0 5px;
+    color: #999;
+
+    &:hover {
+        border-color: #087973;
+        color: #0aa49c;
+    }
+}
+
+/*#endregion*/
+
+/*#region All Others */
+
+/* In-App Menu - Not the top header one */
+.dark-app-dropdown {
+    position: relative;
+    display: inline-block;
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.75);
+        min-width: 120px;
+        z-index: 1;
+    }
+    .dropdown-content a {
+        color: white;
+        padding: 8px 16px;
+        text-decoration: none;
+        display: block;
+        font-size: 14px;
+    }
+    .dropdown-content a:hover {
+        background-color: #379c94;
+    }
+    .show {
+        display: block;
+    }
+}
+
+.pegaSlider {
+    height: 530px;
+}
+
+.pegaTabNav {
+    position: relative;
+    height: 60px;
+    z-index: 1;
+    min-height: 60px;
+    margin-top: -60px;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: rgba(255,255,255,.80);
+
+    a {
+        color: #333;
+        min-height: 100%;
+        min-width: 100%;
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+
+        &:hover {
+            color: #DA3239;
+        }
+    }
+
+    .active {
+        color: #DA3239;
+    }
+}
+
+/*#endregion */
+
+/*#region Lists (<ul>, <li>) */
+
+.customList {
+    margin: 0 0 7px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.customList li {
+    line-height: 1.428571429;
+    margin: 0 0 0 0;
+    padding: 9px 0 7px 30px;
+}
+
+.customList-dark {
+    li {
+        background: url('/lib/img/others/elements/customList-dark-point.png') left 13px no-repeat;
+    }
+}
+
+.customList-dark .customList-dark li a {
+    font-size: 16px;
+    color: #272727;
+    transition: all 0.25s;
+}
+
+.customList-dark li a:hover {
+    color: #f1373a;
+}
+
+.customList-inverse {
+}
+
+.customList-inverse li {
+    background: url('/lib/img/others/elements/customlist-inverse-point.png') left 13px no-repeat;
+}
+
+.customList-inverse li a {
+    font-size: 16px;
+    color: #fff;
+    transition: all 0.25s;
+}
+
+.customList-inverse li a:hover {
+    color: #272727;
+}
+
+/*#endregion Lists (<ul>, <li>) */
+
+.slantedEdgeHomeFeatures {
+    background: #f2f2f2;
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+
+    &:before {
+        content: "";
+        background: #f2f2f2;
+        height: 200px;
+        transform: skewY(4deg);
+        position: absolute;
+        left: 0;
+        right: 0;
+        z-index: -1;
+        -webkit-backface-visibility: hidden; // for Chrome Windows
+    }
+
+    &:before {
+        top: -120px;
+    }
+}
+
+.ssuFeaturesPresentation {
+    p {
+        /*color: #888888;*/
+    }
+
+    .minHeightAdjust {
+        @media ($xs-min) {
+            margin: 0 0 20px;
+        }
+
+        @media ($sm-min) {
+            height: 190px;
+        }
+
+        @media ($md-min) {
+            height: 140px;
+        }
+    }
+}
+
+.ssuModalProgramsFeaturesPresentation {
+    /*p {
+        @media ($sm-min) {
+            min-height: 150px;
+        }
+
+        @media ($md-min) {
+            min-height: 100px;
+        }
+    }*/
+}
+
+.circleBadge-ssuFeatures {
+    height: 60px;
+    width: 60px;
+    margin: 3px 10px;
+
+    span {
+        color: #009999;
+        font-size: 56px;
+        transition: all 0.5s ease 0s;
+
+        &:hover {
+            color: #1f5db1;
+        }
+    }
+}

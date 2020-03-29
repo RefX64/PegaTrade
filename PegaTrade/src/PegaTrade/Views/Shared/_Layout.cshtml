@@ -1,0 +1,124 @@
+﻿@using PegaTrade.Layer.Models
+@using PegaTrade.Layer.Models.Account
+@{
+    string pageColor = (bool?)ViewData["GrayBackground"] == true ? "#f4f4f4" : "#fff";
+    bool getUserSuccess = Context.Session.TryGetValue(Constant.Session.SessionCurrentUser, out byte[] value);
+    PegaUser currentUser = getUserSuccess ? Utilities.Deserialize<PegaUser>(System.Text.Encoding.UTF8.GetString(value)) : null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PegaTrade</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/lib/img/favicon.png" />
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/alertify/dist/css/alertify.css" />
+        <link rel="stylesheet" href="~/lib/css/pegastyle.css" />
+        <link rel="stylesheet" href="~/lib/css/pegatrade_style.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/lib/css/pt_style_bundle.min.css" asp-append-version="true" />
+    </environment>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+</head>
+
+<body class="footer-body" style="background-color: @pageColor">
+    <nav id="mainNavBar" class="navbar navbar-inverse navbar-custom-pt">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*<a class="navbar-brand" href="/"><img src="~/lib/img/main/nav_brand1.png" alt="Pegasun" /></a>*@
+                <a href="/" class="navbar-brand" style="color: #fff">Pega <span style="color:#71ffc7">Trade</span></a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse" style="margin-top: 0;">
+                <ul class="nav navbar-nav navbar-right">
+                    @if (currentUser != null)
+                    {
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@currentUser.Username <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/viewuser/@currentUser.Username">View Profile</a></li>
+                                <li><a href="@Url.Action("Logout", "Account")">Logout</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/dashboard">Dashboard</a></li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="javascript:void(0)" onclick="app.PTOpenLoginForm()">Login/Register</a>
+                        </li>
+                    }
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Support <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("Company", "Company")">About Us</a></li>
+                            <li><a href="@Url.Action("ContactUs", "Company")">Contact Us</a></li>
+                            @*<li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Nav header</li>*@
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        @RenderSection("fullPageSliderView", false)
+    </nav>
+
+    @RenderBody()
+
+    <footer class="footer footer-sticky-bottom footer-dark">
+        <div class="container">
+            <hr />
+            <div class="col-xs-6 col-sm-3 noHorizontalPadding">
+                <p>&copy; 2017 - PegaTrade ( <a href="https://pegasun.com" target="_blank">By: Pegasun</a> )</p>
+            </div>
+            <div class="col-xs-6 col-sm-4">
+                <div class="col-sm-5">
+                    <p>@Html.ActionLink("Privacy Policy", "PrivacyPolicy", "Home")</p>
+                </div>
+                <div class="col-sm-7">
+                    <p>@Html.ActionLink("License Agreements", "Legal", "Home")</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="mainModal" class="modal fade" data-toggle="modal" tabindex="-1" role="dialog" aria-labelledby="mainModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>*@
+                    <div class="modal-title"></div>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+    <div id="siteWideOverlay" style="display: none;"></div>
+    
+    <script>
+        function executeLayoutInitialization()
+        {
+            @RenderSection("deferredscripts", false)
+        }
+    </script>
+    @Html.Partial("_LoadScripts")
+    @RenderSection("scripts", false)
+</body>
+</html>

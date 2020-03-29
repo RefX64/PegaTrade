@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ArrayOfArrayOfString>
+    <ArrayOfString>
+      <string>E:\Developed\OpenSource\RefX64\PegaTrade\PegaTrade\src\PegaTrade\Views\Account\ExecutePasswordReset.cshtml</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>E:\Developed\OpenSource\RefX64\PegaTrade\PegaTrade\src\PegaTrade\Controllers\AccountController.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>E:\Developed\OpenSource\RefX64\PegaTrade\PegaTrade\src\PegaTrade.Core\StaticLogic\Helper\Utilities.cs</string>
+    </ArrayOfString>
+  </ArrayOfArrayOfString>
+</ArrayOfArrayOfArrayOfString>

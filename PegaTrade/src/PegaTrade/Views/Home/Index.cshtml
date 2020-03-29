@@ -1,0 +1,318 @@
+﻿@{
+  ViewData["Title"] = "PegaTrade - Crypto currency portfolio manager";
+}
+
+<style>
+  .ptFeaturesIconFont {
+  }
+
+    .ptFeaturesIconFont:before {
+      font-size: 50px !important;
+      margin-left: 0px !important;
+      color: #009999;
+    }
+
+  .navbar-custom-pt {
+    margin-bottom: 0;
+  }
+</style>
+
+@section fullPageSliderView
+  {
+  <div id="pageSliderMain" class="pegaSlider">
+    <div id="psm1" class="container" data-backgroundImg="/lib/img/others/promo/home_ss1.jpeg" data-linearGradient="linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, 0.4))" data-backgroundSize="cover">
+      <div class="col-xs-12 text-center" style="margin-top: 145px;">
+        <h1 class="marginBottom40" style="font-size: 40px;">All-In-One Crypto Portfolio Manager</h1>
+        <p class="secondaryTitle" style="margin-bottom: 80px;">Keeping track of your crypto currencies has never been easier!</p>
+        <div class="col-xs-12 col-sm-6">
+          <a class="btn btn-aqua pull-right" href="/demo" target="_blank" style="padding: 8px 80px; font-size: 16px;"
+             onclick="ga('send', 'event', 'Click', 'View', 'ViewDemo');"><i class="ion-cube"></i>&nbsp; View DEMO</a>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <a class="btn btn-primary pull-left" href="/viewportfolio/pegatrade/longterm" target="_blank" style="padding: 8px 40px; font-size: 16px;"
+             onclick="ga('send', 'event', 'Click', 'ViewOurHolding');"><i class="ion-person-stalker"></i>&nbsp; See what we're holding</a>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+<link rel="stylesheet" type="text/css" href="~/lib/img/others/promo/home_features/flaticon.css" async>
+
+<nav id="pegaTabNavBarId" class="pegaTabNav hidden-xs">
+  <div class="container">
+    @*<div class="col-xs-3"><img style="margin-top:12px;" src="~/lib/img/resources/ssuIndex/miniPega_logo1.png" alt="Pegasun" /></div>*@
+    <div class="col-xs-offset-2 col-xs-2"><a id="scrollToWelcomeLink" href="javascript:;" onclick="rj.ScrollTo(565, 3000);" class="active">Welcome</a></div>
+    <div class="col-xs-2"><a id="scrollToOverviewLink" href="javascript:;" onclick="rj.ScrollTo(1100, 3000);">Overview</a></div>
+    <div class="col-xs-2"><a id="scrollToFeatureLink" href="javascript:;" onclick="rj.ScrollTo(1900, 3000);">Features</a></div>
+    <div class="col-xs-2"><a id="scrollToSupportLink" href="javascript:;" onclick="rj.ScrollTo(2550, 3000);">Support/Learn</a></div>
+  </div>
+</nav>
+
+@if (((bool?)TempData["timeout"]).GetValueOrDefault())
+{
+  <div class="bg-danger marginTop20">
+    <div class="container padding10 text-center" style="margin-top: -20px;">
+      <p class="text-danger noMarginBottom">Sorry... :/ We thought you were away, so we've logged you out. Please login again.</p>
+    </div>
+  </div>
+}
+
+@if (TempData["message"] != null)
+{
+  <div class="bg-info marginTop20">
+    <div class="container padding10 text-center" style="margin-top: -20px;">
+      <p class="text-info noMarginBottom">@TempData["message"]</p>
+    </div>
+  </div>
+}
+
+<div style="background-image: url(/lib/img/others/textures/texture1.png)">
+  <div class="container paddingBottom40">
+    <div class="row">
+      <h1 class="text-center italicFont paddingTop20" style="color: #141414; font-size: 44px">Welcome to PegaTrade!</h1>
+      <div class="col-xs-offset-3 col-xs-6 col-sm-offset-0 col-sm-5 col-md-4">
+        <img class="img-responsive" src="/lib/img/others/promo/pt_ss_phone1.png" alt="box" />
+      </div>
+      <div class="col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-7 paddingTop20">
+        <h2 class="row" style="color:#909090">All your coins in one simple interface.</h2>
+        <div class="row marginBottom20">
+          <ul class="customList customList-dark">
+            <li>Easily track the profit/loss of all your crypto currencies in USD, EUR, BTC, and ETH.</li>
+            <li>Create multiple portfolios for difference purposes (Public, Private, etc.).</li>
+            <li>Import your crypto holdings/trades from multiple different places, such as: Different Exchanges, APIs, and Public Etherum Addresses.</li>
+            <li>Share your public portfolio with anyone you choose (community, friends, etc.).</li>
+            <li>Join the community and express yourself (general crypto things, coins you believe in, etc.).</li>
+            <li>Access PegaTrade website from all different devices (PC, tablet, mobile).</li>
+            <li>PegaTrade is being actively developed. Many more features coming soon.</li>
+          </ul>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 col-sm-4 col-md-3 noHorizontalPadding">
+            <a class="btn btn-aqua" href="javascript:void(0)"
+               onclick="app.PTOpenLoginForm(); ga('send', 'event', 'Click', 'View', 'ViewDemo');">Login/Register</a>
+          </div>
+          <div class="col-xs-6 col-sm-4 col-md-3">
+            <a class="btn btn-dark" style="width: 136px" href="/demo" target="_blank"
+               onclick="ga('send', 'event', 'Click', 'View', 'ViewDemo');">View Demo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center paddingTop40 paddingBottom40">
+  <div class="container text-center">
+    <div class="col-xs-offset-1 col-xs-10">
+      <h2 class="marginBottom40">What is <span style="font-size: 120%; color:#009999">PegaTrade</span>?</h2>
+      <p style="color: #444" class="marginBottom40">
+        PegaTrade is a crypto currency portfolio manager with several unique features.
+        You'll be able to add or import all of your trades from other exchanges (such as BitTrex, GDax, Binance, etc.) using both API and
+        CSV files. You'll also be able to import your holdings using just your public ethereum address. Once everything is imported,
+        PegaTrade shows you your Profit/Loss in the selected currencies (USD, EUR, BTC, ETH). Not only that,
+        you can now also share this portfolio with anyone you choose to. <br /><br />
+
+        PegaTrade also has a community and Market Research feature. Using one of these features, you may be able to get ideas on what coins to invest in next. On top of that, we also show our own live portfolio.
+        That way, you can see what coins we’re holding and you can decide if you may be interested in them as well. <br /><br />
+
+        PegaTrade has big dreams moving forward, in not only making it extremely simple to manage your cryptocurrencies, but also implementing many other requested features that make crypto related tasks easier.
+      </p>
+      <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+        <img class="img-responsive" src="~/lib/img/others/promo/pt_admin_home1.PNG" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slantedEdgeHomeFeatures">
+  <div class="container">
+    <h2 class="text-center marginBottom40">Features</h2>
+    <div class="row ssuFeaturesPresentation marginBottom40">
+      <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-3 col-md-2 noHorizontalPadding">
+          <div class="circleBadge-ssuFeatures">
+            <div class="ptFeaturesIconFont flaticon-profits" style=""></div>
+          </div>
+        </div>
+        <div class="col-xs-9 col-md-9 noHorizontalPadding">
+          <div class="minHeightAdjust" style="min-height: 220px">
+            <h4>Track all portfolio</h4>
+            <p>
+              Get a clear view of all your coins and how they are performing (Profit/Loss). You can also create multiple portfolios, thus keeping your coins organized, and having an easy to remember structure.
+              PegaTrade is a much more advanced and simpler way to track your crypto assets than the current ways, such as spreadsheets
+              or platforms where you have to import trades manually.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-3 col-md-2 noHorizontalPadding">
+          <div class="circleBadge-ssuFeatures">
+            <div class="ptFeaturesIconFont flaticon-cloud-computing" style=""></div>
+          </div>
+        </div>
+        <div class="col-xs-9 col-md-9 noHorizontalPadding">
+          <div class="minHeightAdjust" style="min-height: 220px">
+            <h4>Import/Sync trades</h4>
+            <p>
+              You can import your trades from all different places, such as Exchanges, APIs, and Public Ethereum Addresses. This saves the hassle of having to manually enter in your trades after
+              placing an order on an exchange. API Syncing will keep your trades up to date with click of a button (or automatically, once we implement it). CSV Import also lets you import years of trade history.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-3 col-md-2 noHorizontalPadding">
+          <div class="circleBadge-ssuFeatures">
+            <div class="ptFeaturesIconFont flaticon-money" style=""></div>
+          </div>
+        </div>
+        <div class="col-xs-9 col-md-9 noHorizontalPadding">
+          <div class="minHeightAdjust">
+            <h4>Share your portfolio</h4>
+            <p>You can share your portfolios with the community or friends. Easily show them what coins you are holding, and how they are performing. </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-3 col-md-2 noHorizontalPadding">
+          <div class="circleBadge-ssuFeatures">
+            <div class="ptFeaturesIconFont flaticon-team" style=""></div>
+          </div>
+        </div>
+        <div class="col-xs-9 col-md-9 noHorizontalPadding">
+          <div class="minHeightAdjust">
+            <h4>Join Community</h4>
+            <p>Join the enthusiastic crypto community, and post your own thoughts regarding the market or coins that you believe in.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-3 col-md-2 noHorizontalPadding">
+          <div class="circleBadge-ssuFeatures">
+            <div class="ptFeaturesIconFont flaticon-people" style=""></div>
+          </div>
+        </div>
+        <div class="col-xs-9 col-md-9 noHorizontalPadding">
+          <div class="minHeightAdjust">
+            <h4>Market Research/View our holding</h4>
+            <p>The community and research platform help in finding the next coin you may be interested in. We also share our portfolio live for educational purposes.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-3 col-md-2 noHorizontalPadding">
+          <div class="circleBadge-ssuFeatures">
+            <div class="ptFeaturesIconFont flaticon-smartphone" style=""></div>
+          </div>
+        </div>
+        <div class="col-xs-9 col-md-9 noHorizontalPadding">
+          <div class="minHeightAdjust">
+            <h4>Mobile-First Website</h4>
+            <p>PegaTrade website was designed to be Mobile-First. This means until we create our mobile platform, you can get a similar experience by visiting the website on your mobile.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-3 col-md-2 noHorizontalPadding">
+          <div class="circleBadge-ssuFeatures">
+            <div class="ptFeaturesIconFont flaticon-binoculars" style=""></div>
+          </div>
+        </div>
+        <div class="col-xs-9 col-md-9 noHorizontalPadding">
+          <div class="minHeightAdjust">
+            <h4>No advertisements</h4>
+            <p>There are no annoying advertisements on PegaTrade. We are focused on having a simple and clear interface without nagging ads and popups.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-3 col-md-2 noHorizontalPadding">
+          <div class="circleBadge-ssuFeatures">
+            <div class="ptFeaturesIconFont flaticon-coding" style=""></div>
+          </div>
+        </div>
+        <div class="col-xs-9 col-md-9 noHorizontalPadding">
+          <div class="minHeightAdjust">
+            <h4>Constantly Improved</h4>
+            <p>PegaTrade is still in its early phase and is actively being developed. Improvements and new features are constantly being added. </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center paddingTop20 paddingBottom20">
+  <div class="container text-center">
+    <div class="col-xs-offset-1 col-xs-10">
+      <h2 class="marginBottom40">Support/Contact Us</h2>
+      <p style="color: #444" class="marginBottom40">
+        If you have any questions or concerns, you may <a href="/ContactUs">contact us</a> at any time. We would also love to hear any feedback or suggestions you may have for PegaTrade.
+        If you have not done so yet, please take a look at our <a href="/Demo" target="_blank">Demo</a> to see how it works.
+        You may also take a look at <a href="/viewportfolio/pegatrade/longterm" target="_blank">our portfolio</a> to see what coins we are holding.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div style="background-color:#33466E; color: #ffffff">
+  <div class="container text-center paddingBottom40 paddingTop20">
+    <h3 class="marginBottom20">Want to stay informed?</h3>
+    <div class="col-xs-12 col-sm-offset-2 col-sm-8 marginBottom20" style="color: #eee">
+      <p>Join our newsletter to get PegaTrade updates/releases, crypto related article/tips, our portfolio updates, and etc. If you don’t like it, you can unsubscribe any time.</p>
+    </div>
+    <div id="moreComingSoonSubscribeEmailForm">
+      <div class="col-xs-12 col-sm-offset-3 col-sm-4">
+        <div class="row">
+          <input type="text" class="form-control subscribe-email-text" style="height: 30px; border-radius: 0;" placeholder="Email Address" />
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-2">
+        <div class="row">
+          <button type="button" class="btn btn-default subscribe-email-button" onclick="pega.SubscribeEmailMailing('moreComingSoonSubscribeEmailForm')"
+                  data-loading-text="Subscribing... Please Wait.">
+            Subscribe
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+@section deferredscripts
+{
+    pega.InitializePageMainSlider(true);
+
+    rj.AddEventListener('scroll', document, rj.Throttle(adjustProperMiniNavClassByScrollTop, 500));
+}
+
+    function adjustProperMiniNavClassByScrollTop()
+    {
+        var currentScrollPosition = rj.GetScrollTop();
+
+        // Sticky or not
+        var elem = rj.Id('pegaTabNavBarId');
+        if (currentScrollPosition >= 560 && !elem.classList.contains('fixed-top-page'))
+        {
+            elem.classList.add('fixed-top-page');
+        }
+        else if (currentScrollPosition < 560 && elem.classList.contains('fixed-top-page'))
+        {
+            elem.classList.remove('fixed-top-page');
+        }
+
+        // Currently Scrolled Nav-Active class
+        rj.ForEach(rj.find('#scrollToWelcomeLink, #scrollToOverviewLink, #scrollToFeatureLink, #scrollToSupportLink'), function (item)
+        {
+            item.classList.remove("active");
+        });
+        if (currentScrollPosition > 2498) { rj.Id('scrollToSupportLink').classList.add('active'); }
+        else if (currentScrollPosition > 1898) { rj.Id('scrollToFeatureLink').classList.add('active'); }
+        else if (currentScrollPosition > 1098) { rj.Id('scrollToOverviewLink').classList.add('active'); }
+        else { rj.Id('scrollToWelcomeLink').classList.add('active'); }
+    }
+</script>

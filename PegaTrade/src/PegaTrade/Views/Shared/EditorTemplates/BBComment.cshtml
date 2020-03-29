@@ -1,0 +1,30 @@
+﻿@using PegaTrade.Core.StaticLogic.Helper
+@model PegaTrade.Layer.Models.Community.BBComment
+@{ }
+
+<div class="conversation-container conv-border conv-hover" data-thread="@Model.ThreadId">
+    <div class="image-content">
+        <img src="@Model.User.GravatarImageLink()" alt="Avatar" class="img-circle avatar-image" style="margin-bottom: 5px;">
+        @Html.Raw(Model.TagCode.GenerateLabelHTML())
+    </div>
+    <div class="text-content">
+        <a href="/viewuser/@Model.User.Username" target="_blank" class="username"><b>@Model.User.Username</b></a>
+        <small class="pull-right color-gray">@Model.CreateDate</small>
+        <p>@Model.Message</p>
+        <div class="conv-options-holder" onclick="event.stopPropagation()">
+            <i class="ion-android-arrow-dropup-circle text-success conv-options" onclick="app.ConvOptionsClicked(this, event)"
+               data-action="vote" data-type="comment" data-upvote="true" data-id="@Model.CommentId">@Model.VoteResult.TotalUpvotes</i>
+            <i class="ion-android-arrow-dropdown-circle text-danger conv-options" onclick="app.ConvOptionsClicked(this, event)"
+               data-action="vote" data-type="comment" data-upvote="false" data-id="@Model.CommentId">@Model.VoteResult.TotalDownvote</i>
+            @if (Model.CurrentLoggedInUserID == Model.UserId)
+            {
+                <i class="ion-ios-more conv-options-more" onclick="app.ToggleConvOption(this);"></i>
+                <div class="dark-app-dropdown">
+                    <div class="dropdown-content">
+                        <a href="javascript:void(0)" onclick="app.DeleteBBComment('@Model.CommentId')">Delete</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

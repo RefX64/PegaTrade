@@ -1,0 +1,28 @@
+﻿@model PegaTrade.ViewModel.ContactUsVM
+
+<div class="container">
+    <div class="row">
+        <h2>Contact us</h2>
+        <div>
+            <p>Got a question or a comment? Please fill in the form below and click Send Message.</p>
+            <p>We are looking forward to hearing your experience with PegaTrade.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 marginBottom20">
+                <form asp-action="SubmitContactUs" asp-controller="Company" asp-antiforgery="true" id="ContactUsForm" class="form-group">
+                    @Html.ValidationSummary()
+
+                    <input type="text" asp-for="Name" class="form-control marginBottom20" placeholder="Your Name" />
+                    <input type="text" asp-for="Email" class="form-control marginBottom20" placeholder="Your Email Address" />
+                    <input type="text" asp-for="Subject" class="form-control marginBottom20" placeholder="Subject (Question? Feedback?)" />
+                    <textarea asp-for="Message" class="form-control marginBottom20" placeholder="Your Message" rows="4"></textarea>
+
+                    <div id="recaptchaDiv" class="g-recaptcha marginBottom20" data-sitekey="xxx"></div>
+
+                    <button id="submitContactUsBtn" type="button" onclick="app.SubmitContactUsForm()" class="btn btn-dark" data-loading-text="Sending... Please wait...">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+﻿@model PegaTrade.ViewModel.PortfolioVM
+@{
+    string headerTitle = Model.ViewOtherUser ? string.Format("{0}'s Portfolio", Model.ViewUser.Username) : "Portfolio";
+}
+
+<h3 class="noMarginTopHeader">@headerTitle</h3>
+
+<div class="default-block marginBottom20">
+    <div class="content" style="padding-top: 0;">
+        <input type="hidden" asp-for="ViewOtherUser" id="currentPortfolioViewOtherUser" />
+        @if (Model.ViewOtherUser)
+        {
+            <input type="hidden" asp-for="ViewUser.Username" id="currentViewUserUsernameInput" />
+        }
+        <div class="row">
+            <div class="col-xs-12 col-sm-5 noPaddingRight">
+                <div class="header light" style="padding-left: 0">Portfolio</div>
+                <div class="">
+                    <div class="col-xs-10 col-sm-9 noHorizontalPadding pull-left">
+                        <select id="globalCurrentlySelectedPortfolio" asp-for="SelectedPortfolio" asp-items="Model.PortfolioList"
+                                onchange="app.ReloadPortfolioHoldingsCoinSummary()" class="form-control"></select>
+                    </div>
+                    @if (!Model.ViewOtherUser)
+                    {
+                        <a href="javascript:void(0)" class="pull-left" style="padding-left: 10px">
+                            <span class="ion-plus-round" data-loadmodal="" data-targetid="mainModal" data-url='@Url.Action("GetPortfolioList", "Crypto")'
+                                  style="font-size: 22px;" data-size="mid" data-title="Manage Portfolios" data-hidefooter></span>
+                        </a>
+                    }
+                    <a href="javascript:void(0)" class="pull-left" style="padding-left: 10px">
+                        <span class="ion-loop" onclick="app.ReloadPortfolioHoldingsCoinSummary()" style="font-size: 22px;"></span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-xs-4 col-sm-2">
+                <div class="header light" style="padding-left: 0">Format</div>
+                <select id="displayCurrencyFormatSL" class="form-control" onchange="app.ReloadPortfolioHoldingsCoinSummary()">
+                    <option value="1">USD</option>
+                    <option value="2">EUR</option>
+                    <option value="3">BTC</option>
+                    <option value="4">ETH</option>
+                </select>
+            </div>
+            <div class="col-xs-8 col-sm-4">
+                <div class="header light" style="padding-left: 0">Display Type</div>
+                <div style="padding-top: 6px;">
+                    <input type="radio" name="portfolioCoinsDisplayType" id="portfolioDisplayTypeCombined" class="cursor-pointer" value="combined" onchange="app.ReloadPortfolioHoldingsCoinSummary()" checked="checked" /> <label class="cursor-pointer" for="portfolioDisplayTypeCombined">Combined</label> &nbsp;
+                    <input type="radio" name="portfolioCoinsDisplayType" id="portfolioDisplayTypeSeparate" class="cursor-pointer" value="separate" onchange="app.ReloadPortfolioHoldingsCoinSummary()" /> <label class="cursor-pointer" for="portfolioDisplayTypeSeparate">Separate</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="coinsSummary">
+    @Html.Partial("_FullCoins", Model.CoinsVM)
+</div>

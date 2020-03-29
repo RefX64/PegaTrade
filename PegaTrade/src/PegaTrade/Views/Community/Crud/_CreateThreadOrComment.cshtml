@@ -1,0 +1,51 @@
+﻿@* Not very ideal way of binding, but use this to create a new Thread OR a Comment. *@
+@model PegaTrade.ViewModel.Community.ConversationsVM
+@{
+    string formId = Model.IsCreateCommentMode ? "createNewCommentForm" : "createNewThreadForm_" + Model.CurrentThread.ThreadName;
+    string action = Model.IsCreateCommentMode ? "CreateBBComment" : "CreateBBThread";
+    string functionToCall = Model.IsCreateCommentMode ? $"app.SubmitCreateCommentForm('{formId}')" : $"app.SubmitCreateThreadForm('{formId}')";
+}
+
+<form id="@formId" asp-controller="Community" asp-action="@action">
+    <input type="hidden" asp-for="CurrentThread.CategoryCode" name="@nameof(Model.CurrentThread.CategoryCode)" />
+    <input type="hidden" asp-for="CurrentThread.OfficialCoinId" name="@nameof(Model.CurrentThread.OfficialCoinId)" />
+    <input type="hidden" asp-for="CurrentThread.ThreadId" name="@nameof(Model.CurrentThread.ThreadId)" />
+    <input type="hidden" asp-for="CurrentThread.ThreadName" name="@nameof(Model.CurrentThread.ThreadName)" />
+
+    @if (!Model.CurrentUser.IsValidUser())
+    {
+        <p>Please <a href="javascript:void(0)" onclick="app.PTOpenLoginForm()">Login/Register</a> to post something.</p>
+    }
+    else
+    {
+        <div class="row">
+            <div class="conversation-container" style="padding: 5px 15px 5px 15px">
+                <div class="image-content">
+                    <img src="@Model.CurrentUser.GravatarImageLink()" alt="Avatar" class="img-circle avatar-image" />
+                </div>
+                <div class="text-content">
+                    <div class="">
+                        <textarea name="@nameof(Model.CurrentThread.Message)" class="form-control" placeholder="Write something" data-input="message" onfocus="app.ShowHideBBMessageTextOptions('@formId', true)"
+                                  onblur="app.ShowHideBBMessageTextOptions('@formId', false)"></textarea>
+                    </div>
+                    <div class="marginTop20" data-options="options" style="display: none">
+                        <button type="button" class="btn btn-sm btn-success" onclick="@functionToCall">Post</button>
+                        @if (Model.CurrentThread.OfficialCoinId.GetValueOrDefault() > 0)
+                        {
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" asp-for="CurrentThread.TagCode" value="1" name="@nameof(Model.CurrentThread.TagCode)"><span class="label label-success">Long</span>
+                                </label>
+                            </div>
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" asp-for="CurrentThread.TagCode" value="2" name="@nameof(Model.CurrentThread.TagCode)"><span class="label label-danger">Short</span>
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</form>

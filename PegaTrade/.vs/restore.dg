@@ -1,0 +1,7 @@
+#:E:\Developed\Website\PegaTrade\src\PegaTrade.Layer\PegaTrade.Layer.xproj
+#:E:\Developed\Website\PegaTrade\src\PegaTrade.Core\PegaTrade.Core.xproj
+E:\Developed\Website\PegaTrade\src\PegaTrade.Core\PegaTrade.Core.xproj|E:\Developed\Website\PegaTrade\src\PegaTrade.Layer\PegaTrade.Layer.xproj
+#:E:\Developed\Website\PegaTrade\src\PegaTrade\PegaTrade.xproj
+E:\Developed\Website\PegaTrade\src\PegaTrade\PegaTrade.xproj|E:\Developed\Website\PegaTrade\src\PegaTrade.Core\PegaTrade.Core.xproj
+E:\Developed\Website\PegaTrade\src\PegaTrade\PegaTrade.xproj|E:\Developed\Website\PegaTrade\src\PegaTrade.Layer\PegaTrade.Layer.xproj
+E:\Developed\Website\PegaTrade\src\PegaTrade.Core\PegaTrade.Core.xproj|E:\Developed\Website\PegaTrade\src\PegaTrade.Layer\PegaTrade.Layer.xproj

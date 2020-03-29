@@ -1,0 +1,14 @@
+﻿[
+  {
+    "outputFile": "wwwroot/lib/css/pegatrade_style.css",
+    "inputFile": "wwwroot/lib/css/pegatrade_style.scss"
+  },
+  {
+    "outputFile": "wwwroot/lib/css/pegastyle.css",
+    "inputFile": "wwwroot/lib/css/pegastyle.scss"
+  },
+  {
+    "outputFile": "wwwroot/lib/js/pega_polyfill.es5.js",
+    "inputFile": "wwwroot/lib/js/pega_polyfill.js"
+  }
+]

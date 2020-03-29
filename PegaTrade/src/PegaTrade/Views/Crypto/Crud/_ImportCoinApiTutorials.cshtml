@@ -1,0 +1,75 @@
+﻿<div id="apiImportTutorialContainer" class="content">
+
+    @* BitTrex *@
+    <div id="apiImportBitTrex" class="" style="" data-exchange="2">
+        <img src="~/lib/img/exchanges/logo/bittrex.png" alt="BitTrex Exchange" height="30" /><br /><br />
+        <p>
+            Add your BitTrex READ-ONLY API so that we can import all your Bittrex trades into your portfolio. <br /><br />
+
+            <span class="text-danger">
+                Please note that the Bittrex API is currently only delivering the transactions for the last 30 days.
+                To import all trades, we recommend you use the Bittrex CSV import first, and then activate the API.
+                This will ensure all past, present, and future transactions are imported.<br /><br />
+            </span>
+
+            <b>Insturctions</b><br />
+            1. Log in into your Bittrex account and navigate to <b>Settings</b> -> <b>API Keys</b> (<a href="https://bittrex.com/Manage#sectionApi" target="_blank">https://bittrex.com/Manage#sectionApi</a>)<br />
+            2. Create a new key<br />
+            3. Enable only <b>READ INFO</b><br />
+            4. Save the key<br />
+            5. Enter your <b>Key(public)</b> and your <b>Secret</b> below<br />
+        </p>
+    </div>
+
+    @* Coinbase *@
+    <div id="apiImportCoinbase" class="" style="display: none" data-exchange="4">
+        <img src="~/lib/img/exchanges/logo/coinbase.png" alt="Coinbase Exchange" height="30" /><br /><br />
+        <p>
+            <b class="text-danger">Does not work yet!</b><br />
+            @*Add your Coinbase <strong>VIEW-ONLY</strong> API so that we can import all your Coinbase trades into your portfolio. <br /><br />
+                <span style="font-style: italic">
+                    Your deposits and withdrawals will be ignored since Coinbase does not display this in their API.
+                </span><br /><br />
+
+                <span class="text-danger">
+                    Please note that the Coinbase API currently only delivers last 100 orders/fills.
+                    To import all trades, we recommend you use the Coinbase CSV import first, and then activate the API.
+                    This will ensure all past, present, and future transactions are imported.<br /><br />
+                </span>
+
+                <b>Insturctions</b><br />
+                1. Log in into your Coinbase, click the notification icon (3 lines) and click on <b>"API"</b> (<a href="https://www.gdax.com/settings/api" target="_blank">https://www.gdax.com/settings/api</a>)<br />
+                2. For permissions, click ONLY <b>View</b><br />
+                4. Enter <b>pegatrade</b> as Passphrase<br />
+                5. Click <b>Create API Key</b><br />
+                6. Your <b>Secret</b> key should now appear<br />
+                5. Enter your <b>Key(public)</b>, <b>Secret key</b>, and <b>Passphrase</b> below<br />*@
+        </p>
+    </div>
+
+    @* GDax *@
+    <div id="apiImportGDax" class="" style="display: none" data-exchange="5">
+        <img src="~/lib/img/exchanges/logo/gdax.png" alt="GDAX Exchange" height="30" /><br /><br />
+        <p>
+            Add your GDAX <strong>VIEW-ONLY</strong> API so that we can import all your GDAX trades into your portfolio. <br /><br />
+            <span style="font-style: italic">
+                Your deposits and withdrawals will be ignored since GDAX does not display this in their API.
+            </span><br /><br />
+
+            <span class="text-danger">
+                Please note that the GDAX API currently only delivers last 100 orders/fills.
+                To import all trades, we recommend you use the GDAX CSV import first, and then activate the API.
+                This will ensure all past, present, and future transactions are imported.<br /><br />
+            </span>
+
+            <b>Insturctions</b><br />
+            1. Log in into your GDAX, click the notification icon (3 lines) and click on <b>"API"</b> (<a href="https://www.gdax.com/settings/api" target="_blank">https://www.gdax.com/settings/api</a>)<br />
+            2. For permissions, click ONLY <b>View</b><br />
+            4. Enter <b>pegatrade</b> as Passphrase<br />
+            5. Click <b>Create API Key</b><br />
+            6. Your <b>Secret</b> key should now appear<br />
+            5. Enter your <b>Key(public)</b>, <b>Secret key</b>, and <b>Passphrase</b> below<br />
+        </p>
+    </div>
+
+</div>

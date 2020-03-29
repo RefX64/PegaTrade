@@ -1,0 +1,54 @@
+﻿<script>
+  function allScriptHasBeenLoaded() {
+    if (rj.IsIEorEdge() || !pega.BrowserSupportsAllFeatures()) {
+      rj.LoadJS('https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.21/polyfill.min.js');
+      rj.LoadJS('/lib/js/pega_polyfill.es5.min.js', function () { executeAppInitialization(); });
+    }
+    else { executeAppInitialization(); }
+  }
+
+  function executeAppInitialization() {
+    alertify.logPosition("top right");
+
+    // Clear Bootstrap Modal on hide
+    rj.AddEventListener('hidden.bs.modal', '#mainModal', function (e) { pega.EmptyModal('mainModal'); });
+
+    document.addEventListener('click', function (e) {
+      if (e.target.hasAttribute('data-loadpartial')) { pega.UnobtrusiveLoadPartial(e.target); }
+      else if (e.target.hasAttribute('data-loadmodal')) { pega.UnobtrusiveLoadModal(e.target); }
+      else if (e.target.hasAttribute('data-sorttable')) { pega.UnobtrusiveListJSSort(e.target); }
+      else if (!e.target.matches('.conv-options-more')) {
+        rj.ForEach(rj.find(".dropdown-content"), function (item) {
+          item.classList.remove('show');
+        });
+      };
+    });
+
+    executeLayoutInitialization();
+  }
+</script>
+
+<environment names="Development">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.21/bootstrap-native.js"></script>
+  <script src="~/lib/alertify/dist/js/alertify.js"></script>
+  <script src="~/lib/js/list.js"></script>
+  <script src="~/lib/js/ref.js"></script>
+  <script src="~/lib/js/pega_script.js"></script>
+  <script src="~/lib/js/app.js" onload="allScriptHasBeenLoaded()"></script>
+</environment>
+<environment names="Staging,Production">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.21/bootstrap-native.min.js" async></script>
+  <script src="~/lib/js/pt_script_bundle.min.js" asp-append-version="true" async defer onload="allScriptHasBeenLoaded()"></script>
+</environment>
+
+<!-- Google ReCaptcha -->
+<script src='https://www.google.com/recaptcha/api.js' async defer></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-36432094-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'UA-36432094-3');
+</script>

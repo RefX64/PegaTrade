@@ -1,0 +1,26 @@
+﻿@model PegaTrade.Layer.Models.Account.ViewUser
+@{
+    ViewData["Title"] = "ViewPortfolio";
+    Layout = "_Layout";
+}
+
+<style>
+    body {
+        background-color: #f4f4f4 !important;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div id="portfolioViewContainer">
+            <div class="loadingDivDisplay"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+@section deferredscripts
+{
+    rj.AsyncLoad('portfolioViewContainer', '@Url.Action("LoadPortfolioViewMode", "Crypto")', { username: "@Model.Username", portfolioName: "@Model.PortfolioName" });
+}
+</script>
